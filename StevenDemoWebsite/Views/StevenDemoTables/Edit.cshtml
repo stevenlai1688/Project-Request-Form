@@ -33,18 +33,24 @@
                 <span asp-validation-for="RequestChanges" class="text-danger"></span>
                 <textarea asp-for="RequestChanges" class="form-control"> </textarea>
             </div>
+            <div class="form-group">
+                <label asp-for="RequestEffectsOnOrganization" class="control-label"></label>
+                <span asp-validation-for="RequestEffectsOnOrganization" class="text-danger"></span>
+                <textarea asp-for="RequestEffectsOnOrganization" class="form-control"> </textarea>
+            </div>
             @*Priority Level*@
             <div class="input-group mb-3">
                 <label asp-for="PriorityLevel" class="input-group-text">Priority</label>
                 <select asp-for="PriorityLevel">
                     <option selected></option>
-                    <option value="Low">        Low</option>
-                    <option value="Medium">     Medium</option>
-                    <option value="High">       High</option>
-                    <option value="Emergency">  Emergency</option>
+                    <option value="Low">        Low         </option>
+                    <option value="Medium">     Medium      </option>
+                    <option value="High">       High        </option>
+                    <option value="Emergency">  Emergency   </option>
                 </select>
                 <span asp-validation-for="PriorityLevel" class="text-danger"></span>
             </div>
+            
 
             <div class="form-group">
                 <label asp-for="DesiredCompletionDate" class="control-label"></label>

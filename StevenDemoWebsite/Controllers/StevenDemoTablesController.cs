@@ -10,6 +10,7 @@ using StevenDemoWebsite.Models;
 
 namespace StevenDemoWebsite.Controllers
 {
+    
     public class StevenDemoTablesController : Controller
     {
         private readonly StevenDemoWebsiteContext _context;
@@ -18,7 +19,8 @@ namespace StevenDemoWebsite.Controllers
         {
             _context = context;
         }
-
+       
+     
         // GET: StevenDemoTables
         public async Task<IActionResult> Index()
         {
@@ -54,7 +56,7 @@ namespace StevenDemoWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription, RequestChanges")] StevenDemoTable stevenDemoTable)
+        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization")] StevenDemoTable stevenDemoTable)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +88,7 @@ namespace StevenDemoWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription, RequestChanges")] StevenDemoTable stevenDemoTable)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization")] StevenDemoTable stevenDemoTable)
         {
             if (id != stevenDemoTable.Id)
             {

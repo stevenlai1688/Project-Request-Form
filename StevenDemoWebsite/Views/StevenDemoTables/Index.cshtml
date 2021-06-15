@@ -6,7 +6,7 @@
 }
 
 
-<h1 style="font-weight:200" >Index</h1>
+<h1 style="font-weight:200">Index</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
@@ -27,42 +27,51 @@
                 @Html.DisplayNameFor(model => model.RequestChanges)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.RequestEffectsOnOrganization)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DesiredCompletionDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PriorityLevel)
             </th>
-            <th>Options</th>
+            <th></th>
+
         </tr>
     </thead>
-    <tbody >
-        @foreach (var item in Model) {
-        <tr style="font-size:smaller">
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestChanges)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DesiredCompletionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriorityLevel)
-            </td>
-            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr style="font-size:smaller">
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestorName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestReason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestChanges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestEffectsOnOrganization)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DesiredCompletionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriorityLevel)
+                </td>
+
+                <td class="btn-group">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+

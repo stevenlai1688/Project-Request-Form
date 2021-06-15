@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,8 +10,9 @@ namespace StevenDemoWebsite.Models
 {
     public partial class StevenDemoTable
     {
+        
         public int Id { get; set; }
-        [DisplayName("Reason")]
+        [DisplayName("Reason for Changes")]
         public string RequestReason { get; set; }
         [Required]
         [DisplayName("Name")]
@@ -24,10 +26,20 @@ namespace StevenDemoWebsite.Models
         [Required]
         public string PriorityLevel{ get; set;}
 
-        [DisplayName("Description")]
+        [DisplayName("Description of Changes")]
         public string RequestDescription { get; set; }
 
-        [DisplayName("Changes")]
+        [DisplayName("Changes Requested")]
         public string RequestChanges { get; set; }
+
+
+        [DisplayName("Effect on Organization")]
+        public string RequestEffectsOnOrganization { get; set; }
+
+
+
+
+
+
     }
 }
