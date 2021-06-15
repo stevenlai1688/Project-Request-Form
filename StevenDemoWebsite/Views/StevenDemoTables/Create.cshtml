@@ -15,11 +15,12 @@
             <div class="input-group-append mb-md-4">
                 <label asp-for="RequestorName" class="control-label col-form-label"></label>
                 <input type="text" asp-for="RequestorName" class="form-control mx-md-2" />
-                <span asp-validation-for="RequestorName" class="text-danger " ></span>
-                 
+                @*Checking for validation*@
+                <span asp-validation-for="RequestorName" class="text-danger "></span>
+
                 <label asp-for="DesiredCompletionDate" class="control-label col-form-label"></label>
                 <input asp-for="DesiredCompletionDate" class="form-control mx-md-2" />
-                <span asp-validation-for="DesiredCompletionDate" class="text-danger " ></span>
+                <span asp-validation-for="DesiredCompletionDate" class="text-danger "></span>
             </div>
 
 
@@ -50,7 +51,7 @@
             </div>
             @*Priority Level*@
             <div class="input-group mb-4">
-                <label asp-for="PriorityLevel" class="input-group-text">Priority</label>
+                <label asp-for="PriorityLevel" class="input-group-text ">Priority</label>
                 <select asp-for="PriorityLevel">
                     <option selected></option>
                     <option value="Low">        Low         </option>
@@ -58,7 +59,7 @@
                     <option value="High">       High        </option>
                     <option value="Emergency">  Emergency   </option>
                 </select>
-                <span asp-validation-for="PriorityLevel" class="text-danger"></span>
+                <span asp-validation-for="PriorityLevel" class="text-danger mx-md-2"></span>
             </div>
 
 
