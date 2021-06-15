@@ -16,6 +16,7 @@ namespace StevenDemoWebsite.Models
         public string RequestReason { get; set; }
         [Required]
         [DisplayName("Name")]
+        [StringLength(50)]
         public string RequestorName { get; set; }
 
         [DisplayName("Date")]
@@ -35,10 +36,9 @@ namespace StevenDemoWebsite.Models
 
         [DisplayName("Effect on Organization")]
         public string RequestEffectsOnOrganization { get; set; }
-
-
-
-
+        
+        [DisplayName("Estimated Time Frame")]
+        public string EstimateTimeFrame { get; set; }
 
 
     }

@@ -9,15 +9,19 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="RequestorName" class="control-label"></label>
-                <input asp-for="RequestorName" class="form-control" />
-                <span asp-validation-for="RequestorName" class="text-danger"></span>
+            <div class="input-group-append mb-md-4">
+                <label asp-for="RequestorName" class="control-label col-form-label"></label>
+                <input type="text" asp-for="RequestorName" class="form-control mx-md-2" />
+                <span asp-validation-for="RequestorName" class="text-danger "></span>
+
+                <label asp-for="DesiredCompletionDate" class="control-label col-form-label"></label>
+                <input asp-for="DesiredCompletionDate" class="form-control mx-md-2" />
+                <span asp-validation-for="DesiredCompletionDate" class="text-danger "></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
                 <span asp-validation-for="RequestReason" class="text-danger"></span>
@@ -38,6 +42,11 @@
                 <span asp-validation-for="RequestEffectsOnOrganization" class="text-danger"></span>
                 <textarea asp-for="RequestEffectsOnOrganization" class="form-control"> </textarea>
             </div>
+            <div class="form-group">
+                <label asp-for="EstimateTimeFrame" class="control-label"></label>
+                <span asp-validation-for="EstimateTimeFrame" class="text-danger"></span>
+                <textarea asp-for="EstimateTimeFrame" class="form-control"> </textarea>
+            </div>
             @*Priority Level*@
             <div class="input-group mb-3">
                 <label asp-for="PriorityLevel" class="input-group-text">Priority</label>
@@ -50,16 +59,6 @@
                 </select>
                 <span asp-validation-for="PriorityLevel" class="text-danger"></span>
             </div>
-            
-
-            <div class="form-group">
-                <label asp-for="DesiredCompletionDate" class="control-label"></label>
-                <input asp-for="DesiredCompletionDate" class="form-control" />
-                <span asp-validation-for="DesiredCompletionDate" class="text-danger"></span>
-            </div>
-
-
-
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
