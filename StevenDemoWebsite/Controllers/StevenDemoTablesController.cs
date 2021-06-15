@@ -22,9 +22,17 @@ namespace StevenDemoWebsite.Controllers
        
      
         // GET: StevenDemoTables
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchName)
         {
-            return View(await _context.StevenDemoTable.ToListAsync());
+            // search for name
+            var names = from i in _context.StevenDemoTable
+                        select i;
+
+            if (!String.IsNullOrEmpty(searchName))
+            {
+                names = names.Where(s => s.RequestorName.Contains(searchName));
+            }
+            return View(await names.ToListAsync());
         }
 
         // GET: StevenDemoTables/Details/5

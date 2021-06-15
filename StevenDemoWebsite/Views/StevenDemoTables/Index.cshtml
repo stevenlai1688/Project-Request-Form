@@ -10,7 +10,14 @@
 
 <p>
     <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+
+    <form asp-controller="StevenDemoTables" asp-action="Index">
+        <input type="text" name="searchName" />
+        <input type="submit" value="Filter by Name" class="btn btn-outline-secondary" />
+    </form>
 </p>
+
+
 <table class="table table-striped">
     <thead>
         <tr>
