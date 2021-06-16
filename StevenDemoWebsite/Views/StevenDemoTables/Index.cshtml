@@ -1,4 +1,5 @@
-﻿@model IEnumerable<StevenDemoWebsite.Models.StevenDemoTable>
+﻿@*Changed Model to PriorityLevelViewModel, which allows us to select movies based on priority levels, but we need to use instances of StevenDemoTable object*@
+@model StevenDemoWebsite.Models.PriorityLevelViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -8,49 +9,63 @@
 
 <h1 style="font-weight:200">Index</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+<div class="row">
+    <div class="col">
+        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
+    </div>
+    
+    <div class="col-f">
+        <form asp-controller="StevenDemoTables" asp-action="Index">
+            <p>
+                <select asp-for="SearchPriority" asp-items="Model.Priority">
+                    <option value="">All</option>
+                </select>
+                <input type="text" asp-for="SearchName" />
+                <input type="submit" value="Filter by Name" class="btn btn-outline-secondary" />
 
-    <form asp-controller="StevenDemoTables" asp-action="Index">
-        <input type="text" name="searchName" />
-        <input type="submit" value="Filter by Name" class="btn btn-outline-secondary" />
-    </form>
-</p>
+            </p>
+            
+        </form>
+    </div>
+    
+</div>
 
 
 <table class="table table-striped">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RequestorName)
+                @*Changed from mode.RequestorName to model.StevenTables[0].RequestorName*@
+                @Html.DisplayNameFor(model => model.StevenTables[0].RequestorName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RequestReason)
+                @Html.DisplayNameFor(model => model.StevenTables[0].RequestReason)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RequestDescription)
+                @Html.DisplayNameFor(model => model.StevenTables[0].RequestDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RequestChanges)
+                @Html.DisplayNameFor(model => model.StevenTables[0].RequestChanges)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RequestEffectsOnOrganization)
+                @Html.DisplayNameFor(model => model.StevenTables[0].RequestEffectsOnOrganization)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EstimateTimeFrame)
+                @Html.DisplayNameFor(model => model.StevenTables[0].EstimateTimeFrame)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DesiredCompletionDate)
+                @Html.DisplayNameFor(model => model.StevenTables[0].DesiredCompletionDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PriorityLevel)
+                @Html.DisplayNameFor(model => model.StevenTables[0].PriorityLevel)
             </th>
             <th></th>
 
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @*changed from Model to Model.StevenTables*@
+        @foreach (var item in Model.StevenTables)
         {
             <tr style="font-size:14px">
                 <td>

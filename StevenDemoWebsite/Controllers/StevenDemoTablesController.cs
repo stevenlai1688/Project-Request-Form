@@ -22,17 +22,29 @@ namespace StevenDemoWebsite.Controllers
        
      
         // GET: StevenDemoTables
-        public async Task<IActionResult> Index(string searchName)
+        public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
             // search for name
             var names = from i in _context.StevenDemoTable
                         select i;
-
+            // get a list of priority levels using LINQ
+            IQueryable<string> priorityQuery = from p in _context.StevenDemoTable
+                                               select p.PriorityLevel;
             if (!String.IsNullOrEmpty(searchName))
             {
                 names = names.Where(s => s.RequestorName.Contains(searchName));
             }
-            return View(await names.ToListAsync());
+            if (!String.IsNullOrEmpty(searchPriority))
+            {
+                names = names.Where(x => x.PriorityLevel == searchPriority);
+            }
+            // create a new view model
+            var priorityLevelVM = new PriorityLevelViewModel
+            {
+                Priority = new SelectList(await priorityQuery.Distinct().ToListAsync()),
+                StevenTables = await names.ToListAsync()
+            };
+            return View(priorityLevelVM);
         }
 
         // GET: StevenDemoTables/Details/5
