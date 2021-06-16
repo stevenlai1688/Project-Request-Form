@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using StevenDemoWebsite.Data;
+using Project.Data;
+using Project.Request.Services.Services;
+using Project.Request.Services.Interfaces;
+using Project.Models;
 
-namespace StevenDemoWebsite
+namespace Project
 {
     public class Startup
     {
@@ -28,7 +31,13 @@ namespace StevenDemoWebsite
             services.AddControllersWithViews();
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("StevenDemoWebsiteContext")));
+                    options.UseSqlServer(Configuration.GetConnectionString("StevenDemoWebsiteContext")), ServiceLifetime.Transient);
+            
+            // on start up, everytime we request service, it will addtransient
+            services.AddTransient<IProjectRequestService, ProjectRequestService>();
+
+
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

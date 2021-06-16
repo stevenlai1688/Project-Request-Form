@@ -2,48 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using StevenDemoWebsite.Data;
-using StevenDemoWebsite.Models;
+using Project.Data;
+using Project.Models;
+using Project.Request.Services.Interfaces;
 
-namespace StevenDemoWebsite.Controllers
+namespace Project.Controllers
 {
     
     public class StevenDemoTablesController : Controller
     {
         private readonly StevenDemoWebsiteContext _context;
+        private readonly IProjectRequestService projectRequestService;
+        private readonly IMapper _mapper;
 
-        public StevenDemoTablesController(StevenDemoWebsiteContext context)
+        public StevenDemoTablesController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, IMapper mapper)
         {
+
             _context = context;
+            this.projectRequestService = projectRequestService;
+            this._mapper = mapper;
         }
        
      
         // GET: StevenDemoTables
         public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
-            // search for name
-            var names = from i in _context.StevenDemoTable
-                        select i;
-            // get a list of priority levels using LINQ
-            IQueryable<string> priorityQuery = from p in _context.StevenDemoTable
-                                               select p.PriorityLevel;
-            if (!String.IsNullOrEmpty(searchName))
-            {
-                names = names.Where(s => s.RequestorName.Contains(searchName));
-            }
-            if (!String.IsNullOrEmpty(searchPriority))
-            {
-                names = names.Where(x => x.PriorityLevel == searchPriority);
-            }
-            // create a new view model
-            var priorityLevelVM = new PriorityLevelViewModel
-            {
-                Priority = new SelectList(await priorityQuery.Distinct().ToListAsync()),
-                StevenTables = await names.ToListAsync()
-            };
+
+            var priorityLevel = await projectRequestService.Display(searchName, searchPriority);
+
+            var priorityLevelVM = _mapper.Map<PriorityLevelViewModel>(priorityLevel);
+
             return View(priorityLevelVM);
         }
 
@@ -55,14 +47,24 @@ namespace StevenDemoWebsite.Controllers
                 return NotFound();
             }
 
-            var stevenDemoTable = await _context.StevenDemoTable
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var stevenDemoTable = await projectRequestService.Get(id);
             if (stevenDemoTable == null)
             {
                 return NotFound();
             }
 
-            return View(stevenDemoTable);
+
+            //var viewModel = new StevenDemoTableViewModel();
+            //viewModel.DesiredCompletionDate = stevenDemoTable.DesiredCompletionDate;
+            //viewModel.EstimateTimeFrame = stevenDemoTable.EstimateTimeFrame;
+            //viewModel.Id = stevenDemoTable.Id;
+
+            // mapper to do the job above
+            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+
+            
+
+            return View(viewModel);
         }
 
         // GET: StevenDemoTables/Create
@@ -80,11 +82,13 @@ namespace StevenDemoWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(stevenDemoTable);
-                await _context.SaveChangesAsync();
+                stevenDemoTable = await projectRequestService.Create(stevenDemoTable);
                 return RedirectToAction(nameof(Index));
             }
-            return View(stevenDemoTable);
+
+            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+
+            return View(viewModel);
         }
 
         // GET: StevenDemoTables/Edit/5
@@ -94,13 +98,15 @@ namespace StevenDemoWebsite.Controllers
             {
                 return NotFound();
             }
-
+            //
             var stevenDemoTable = await _context.StevenDemoTable.FindAsync(id);
             if (stevenDemoTable == null)
             {
                 return NotFound();
             }
-            return View(stevenDemoTable);
+            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+
+            return View(viewModel);
         }
 
         // POST: StevenDemoTables/Edit/5
@@ -119,8 +125,7 @@ namespace StevenDemoWebsite.Controllers
             {
                 try
                 {
-                    _context.Update(stevenDemoTable);
-                    await _context.SaveChangesAsync();
+                     var table = await projectRequestService.Update(stevenDemoTable);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -135,7 +140,8 @@ namespace StevenDemoWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(stevenDemoTable);
+            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+            return View(viewModel);
         }
 
         // GET: StevenDemoTables/Delete/5
@@ -146,14 +152,15 @@ namespace StevenDemoWebsite.Controllers
                 return NotFound();
             }
 
-            var stevenDemoTable = await _context.StevenDemoTable
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var stevenDemoTable = await projectRequestService.Get(id);
+            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+
             if (stevenDemoTable == null)
             {
                 return NotFound();
             }
 
-            return View(stevenDemoTable);
+            return View(viewModel);
         }
 
         // POST: StevenDemoTables/Delete/5

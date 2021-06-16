@@ -6,14 +6,16 @@ using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
-namespace StevenDemoWebsite.Models
+namespace Project.Models
 {
-    public partial class StevenDemoTable
+    public partial class StevenDemoTableViewModel
     {
         
         public int Id { get; set; }
+
         [DisplayName("Reason for Changes")]
         public string RequestReason { get; set; }
+
         [Required]
         [DisplayName("Name")]
         [StringLength(50)]
