@@ -12,8 +12,8 @@ namespace Project.Request.Web
         public AutoMapperConfiguration()
         { 
 
-            CreateMap<StevenDemoTableViewModel, StevenDemoTable>();
-            CreateMap<StevenDemoTable, StevenDemoTableViewModel>();
+            CreateMap<ProjectRequestViewModel, ProjectRequest>();
+            CreateMap<ProjectRequest, ProjectRequestViewModel>();
             
             CreateMap<PriorityLevelViewModel, PriorityLevel>();
             CreateMap<PriorityLevel, PriorityLevelViewModel>();

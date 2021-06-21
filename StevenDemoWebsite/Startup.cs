@@ -32,7 +32,7 @@ namespace Project
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("StevenDemoWebsiteContext")), ServiceLifetime.Transient);
-            
+           
             // on start up, everytime we request service, it will addtransient
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
 

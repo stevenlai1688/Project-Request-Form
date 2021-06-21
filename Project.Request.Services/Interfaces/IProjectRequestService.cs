@@ -9,9 +9,10 @@ namespace Project.Request.Services.Interfaces
 {
     public interface IProjectRequestService
     {
-        Task<StevenDemoTable> Get(int? id);
+        Task<ProjectRequest> Get(int? id);
         Task<PriorityLevel> Display(string searchName, string searchPriority);
-        Task<StevenDemoTable> Update(StevenDemoTable table);
-        Task<StevenDemoTable> Create(StevenDemoTable table);
+        Task<ProjectRequest> Update(ProjectRequest table);
+        Task<ProjectRequest> Add(ProjectRequest table);
+        Task<ProjectRequest> Remove(int id);
     }
 }

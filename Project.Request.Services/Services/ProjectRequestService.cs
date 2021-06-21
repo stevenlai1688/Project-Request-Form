@@ -19,16 +19,16 @@ namespace Project.Request.Services.Services
         {
             _context = context;
         }
-        public async Task<StevenDemoTable> Get(int? id)
+        public async Task<ProjectRequest> Get(int? id)
         {
             var stevenDemoTable = await _context.StevenDemoTable
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             return stevenDemoTable;
         }
-
         public async Task<PriorityLevel> Display(string searchName, string searchPriority)
         {
+
             // search for name
             var names = from i in _context.StevenDemoTable
                         select i;
@@ -48,30 +48,35 @@ namespace Project.Request.Services.Services
             }
 
            
-            var priorityLevelVM = new PriorityLevel
+            var priorityLevel = new PriorityLevel
             {
                 // the priority is based on the different priority level, it is based on the ordering of P.L. in the index
                 Priority = new SelectList(await priorityQuery.Distinct().ToListAsync()),
                 // separate tables based on the priority level
-                StevenTables = await names.ToListAsync()
+                ProjectRequestTables = await names.ToListAsync()
             };
             
-            return priorityLevelVM;
+            return priorityLevel;
         }
-        public async Task<StevenDemoTable> Update (StevenDemoTable stevenDemoTable)
+        public async Task<ProjectRequest> Update(ProjectRequest projectRequestTable)
         {
-            _context.Update(stevenDemoTable);
+            _context.Update(projectRequestTable);
             await _context.SaveChangesAsync();
-            return stevenDemoTable;
+            return projectRequestTable;
         }
-
-        public async Task<StevenDemoTable> Create (StevenDemoTable stevenDemoTable)
+        public async Task<ProjectRequest> Add (ProjectRequest projectRequestTable)
         {
-            _context.Add(stevenDemoTable);
+            _context.Add(projectRequestTable);
             await _context.SaveChangesAsync();
-            return stevenDemoTable;
+            return projectRequestTable;
         }
-
+        public async Task<ProjectRequest> Remove (int id)
+        {
+            var projectRequestTable = await _context.StevenDemoTable.FindAsync(id);
+            _context.StevenDemoTable.Remove(projectRequestTable);
+            await _context.SaveChangesAsync();
+            return projectRequestTable;
+        }
 
     }
 }

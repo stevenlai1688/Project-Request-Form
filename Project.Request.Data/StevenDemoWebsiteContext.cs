@@ -14,6 +14,7 @@ namespace Project.Data
         {
         }
 
-        public DbSet<Project.Models.StevenDemoTable> StevenDemoTable { get; set; }
+        public DbSet<Project.Models.ProjectRequest> StevenDemoTable { get; set; }
+
     }
 }
