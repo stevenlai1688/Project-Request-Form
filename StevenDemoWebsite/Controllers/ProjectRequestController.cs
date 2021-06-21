@@ -12,22 +12,22 @@ using Project.Request.Services.Interfaces;
 
 namespace Project.Controllers
 {
-    
-    public class StevenDemoTablesController : Controller
+
+    public class ProjectRequestController : Controller
     {
         private readonly StevenDemoWebsiteContext _context;
         private readonly IProjectRequestService projectRequestService;
         private readonly IMapper _mapper;
 
-        public StevenDemoTablesController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, IMapper mapper)
+        public ProjectRequestController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, IMapper mapper)
         {
 
             _context = context;
             this.projectRequestService = projectRequestService;
             this._mapper = mapper;
         }
-       
-     
+
+
         // GET: StevenDemoTables
         public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
@@ -36,6 +36,7 @@ namespace Project.Controllers
 
             var priorityLevelVM = _mapper.Map<PriorityLevelViewModel>(priorityLevel);
 
+            
             return View(priorityLevelVM);
         }
 
@@ -47,22 +48,22 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            var stevenDemoTable = await projectRequestService.Get(id);
-            if (stevenDemoTable == null)
+            var projectRequestViewModel = await projectRequestService.Get(id);
+            if (projectRequestViewModel == null)
             {
                 return NotFound();
             }
 
 
-            //var viewModel = new StevenDemoTableViewModel();
+            //var viewModel = new ProjectRequestViewModel();
             //viewModel.DesiredCompletionDate = stevenDemoTable.DesiredCompletionDate;
             //viewModel.EstimateTimeFrame = stevenDemoTable.EstimateTimeFrame;
             //viewModel.Id = stevenDemoTable.Id;
 
             // mapper to do the job above
-            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+            var viewModel = _mapper.Map<ProjectRequestViewModel>(projectRequestViewModel);
 
-            
+
 
             return View(viewModel);
         }
@@ -78,17 +79,26 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame")] StevenDemoTable stevenDemoTable)
+        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentId")] ProjectRequestViewModel projectRequestViewModel)
         {
+            
             if (ModelState.IsValid)
             {
-                stevenDemoTable = await projectRequestService.Create(stevenDemoTable);
+                // first map ProjectRequestViewModel to a ProjectRequest
+                var record = _mapper.Map<ProjectRequest>(projectRequestViewModel);
+                // split List<string> to comma separated string
+                record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
+                // call service
+                await projectRequestService.Add(record);
+
                 return RedirectToAction(nameof(Index));
+            
             }
+            //map first
+            //parse it
+            
 
-            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
-
-            return View(viewModel);
+            return View(projectRequestViewModel);
         }
 
         // GET: StevenDemoTables/Edit/5
@@ -99,14 +109,15 @@ namespace Project.Controllers
                 return NotFound();
             }
             //
-            var stevenDemoTable = await _context.StevenDemoTable.FindAsync(id);
-            if (stevenDemoTable == null)
+            var projectRequest = await _context.StevenDemoTable.FindAsync(id);
+            
+            if (projectRequest == null)
             {
                 return NotFound();
             }
-            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
-
-            return View(viewModel);
+            var projectRequestViewModel = _mapper.Map<ProjectRequestViewModel>(projectRequest);
+            
+            return View(projectRequestViewModel);
         }
 
         // POST: StevenDemoTables/Edit/5
@@ -114,9 +125,10 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame")] StevenDemoTable stevenDemoTable)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentId")] ProjectRequestViewModel projectRequestViewModel)
         {
-            if (id != stevenDemoTable.Id)
+            
+            if (id != projectRequestViewModel.Id)
             {
                 return NotFound();
             }
@@ -125,11 +137,16 @@ namespace Project.Controllers
             {
                 try
                 {
-                     var table = await projectRequestService.Update(stevenDemoTable);
+                    // first map ProjectRequestViewModel to a ProjectRequest
+                    var record = _mapper.Map<ProjectRequest>(projectRequestViewModel);
+                    // split List<string> to comma separated string
+                    record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
+                    // call service
+                    await projectRequestService.Update(record);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StevenDemoTableExists(stevenDemoTable.Id))
+                    if (!StevenDemoTableExists(projectRequestViewModel.Id))
                     {
                         return NotFound();
                     }
@@ -140,8 +157,8 @@ namespace Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
-            return View(viewModel);
+            
+            return View(projectRequestViewModel);
         }
 
         // GET: StevenDemoTables/Delete/5
@@ -152,10 +169,10 @@ namespace Project.Controllers
                 return NotFound();
             }
 
-            var stevenDemoTable = await projectRequestService.Get(id);
-            var viewModel = _mapper.Map<StevenDemoTableViewModel>(stevenDemoTable);
+            var projectRequestViewModel = await projectRequestService.Get(id);
+            var viewModel = _mapper.Map<ProjectRequestViewModel>(projectRequestViewModel);
 
-            if (stevenDemoTable == null)
+            if (projectRequestViewModel == null)
             {
                 return NotFound();
             }
@@ -168,9 +185,7 @@ namespace Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var stevenDemoTable = await _context.StevenDemoTable.FindAsync(id);
-            _context.StevenDemoTable.Remove(stevenDemoTable);
-            await _context.SaveChangesAsync();
+            var projectRequestViewModel = await projectRequestService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
 
