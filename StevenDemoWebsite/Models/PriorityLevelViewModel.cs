@@ -6,7 +6,7 @@ namespace Project.Models
 {
     public class PriorityLevelViewModel
     {
-        public List<StevenDemoTableViewModel> StevenTables { get; set; }
+        public List<ProjectRequestViewModel> ProjectRequestTables { get; set; }
 
         public SelectList Priority { get; set; }
 

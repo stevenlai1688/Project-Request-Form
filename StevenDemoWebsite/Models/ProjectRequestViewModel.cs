@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
-    public partial class StevenDemoTableViewModel
+    public partial class ProjectRequestViewModel
     {
         
         public int Id { get; set; }
@@ -42,6 +42,11 @@ namespace Project.Models
         [DisplayName("Estimated Time Frame")]
         public string EstimateTimeFrame { get; set; }
 
+        [DisplayName("Business Justification and Strategic Benefit")]
+        [Required]
+        public List<string> BusinessJustification { get; set; }
+
+        
 
     }
 }
