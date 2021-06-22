@@ -14,7 +14,7 @@ namespace Project.Data
         {
         }
 
-        public DbSet<Project.Models.ProjectRequest> StevenDemoTable { get; set; }
-
+        public virtual DbSet<ProjectRequest> StevenDemoTable { get; set; }
+        public virtual DbSet<CostCenter> CostCenter { get; set; }
     }
 }
