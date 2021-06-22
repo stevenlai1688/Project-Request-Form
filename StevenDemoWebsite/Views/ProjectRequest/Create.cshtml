@@ -2,14 +2,14 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
 }
 
 <h1 style="font-weight:200">Create a Request</h1>
 
 <hr />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="input-group-append mb-md-4">
@@ -23,6 +23,11 @@
                 <span asp-validation-for="DesiredCompletionDate" class="text-danger "></span>
             </div>
             <div class="form-group">
+                <label asp-for="RequestChanges" class="control-label"></label>
+                <span asp-validation-for="RequestChanges" class="text-danger"></span>
+                <textarea asp-for="RequestChanges" class="form-control"> </textarea>
+            </div>
+            <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
                 <span asp-validation-for="RequestReason" class="text-danger"></span>
                 <textarea asp-for="RequestReason" class="form-control"> </textarea>
@@ -32,11 +37,7 @@
                 <span asp-validation-for="RequestDescription" class="text-danger"></span>
                 <textarea asp-for="RequestDescription" class="form-control"> </textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="RequestChanges" class="control-label"></label>
-                <span asp-validation-for="RequestChanges" class="text-danger"></span>
-                <textarea asp-for="RequestChanges" class="form-control"> </textarea>
-            </div>
+
             <div class="form-group">
                 <label asp-for="RequestEffectsOnOrganization" class="control-label"></label>
                 <span asp-validation-for="RequestEffectsOnOrganization" class="text-danger"></span>
@@ -59,8 +60,16 @@
                 </select>
                 <span asp-validation-for="PriorityLevel" class="text-danger mx-md-2"></span>
             </div>
+            @*CostCenter*@
+            <div class="form-group">
+                <span asp-validation-for="DepartmentsId" class="text-danger"></span>
+                <label asp-for="DepartmentsId" class="control-label">Department</label>
+                <select asp-for="DepartmentsId" name="DepartmentsId[]" class="form-control" asp-items="ViewBag.CostCenters">
+                </select>
+            </div>
+
             @*Business Justification*@
-            <p>Business Justification and Strategic Benefit</p>
+            <label asp-for="BusinessJustification" class="col-form-label text-wrap">Business Justification and Strategic Benefit</label>
             @{
                 List<string> justifications = new List<string>();
                 justifications.Add("Cost Savings");
@@ -71,20 +80,19 @@
                 justifications.Add("Upgrade");
                 justifications.Add("Retention");
             }
-            <div class="input-group col-form-label">
+            <div class="input-group form-check-inline col-form-label-lg">
                 @{
-                    <span asp-validation-for="BusinessJustification"  class="text-danger"></span>
+                    <span asp-validation-for="BusinessJustification" class="text-danger"></span>
                     foreach (string value in justifications)
                     {
 
-                        
+
                         <label><input class="input-group-sm mx-2" type="checkbox" value="@value.ToString()" name="BusinessJustification[]" />@value.ToString()</label>
 
                     }
 
                 }
             </div>
-         
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

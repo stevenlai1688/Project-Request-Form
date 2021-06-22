@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
 }
 
 
@@ -18,8 +18,8 @@
         <form asp-controller="ProjectRequest" asp-action="Index">
             <p>
                 @*search for priority*@
-                <select asp-for="SearchPriority" asp-items="Model.Priority">
-                    <option value="">All</option>
+                <select asp-for="SearchPriority" asp-items="Model.Priority"style="font-size:16px" >
+                    <option value="" > All </option>
                 </select>
                 @*search for name*@
                 <input type="text" asp-for="SearchName" />
@@ -39,14 +39,15 @@
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestorName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestChanges)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestReason)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestDescription)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestChanges)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestEffectsOnOrganization)
             </th>
@@ -62,6 +63,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].BusinessJustification)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].Departments)
+            </th>
             <th></th>
 
         </tr>
@@ -70,9 +74,12 @@
         @*changed from Model to Model.StevenTables*@
         @foreach (var item in Model.ProjectRequestTables)
         {
-        <tr style="font-size:14px">
+        <tr style="font-size:13px">
             <td>
                 @Html.DisplayFor(modelItem => item.RequestorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestChanges)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RequestReason)
@@ -80,9 +87,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.RequestDescription)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestChanges)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.RequestEffectsOnOrganization)
             </td>
@@ -98,10 +103,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BusinessJustification)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departments)
+            </td>
             <td class="btn-group-sm">
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size:small">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:smaller">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Delete</a>
             </td>
         </tr>
         }
