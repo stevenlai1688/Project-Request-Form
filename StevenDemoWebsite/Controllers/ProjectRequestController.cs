@@ -17,13 +17,18 @@ namespace Project.Controllers
     {
         private readonly StevenDemoWebsiteContext _context;
         private readonly IProjectRequestService projectRequestService;
+        private readonly ICostCenterService costCenterService;
         private readonly IMapper _mapper;
 
-        public ProjectRequestController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, IMapper mapper)
+        public ProjectRequestController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, ICostCenterService costCenterService, IMapper mapper)
         {
 
             _context = context;
+
             this.projectRequestService = projectRequestService;
+
+            this.costCenterService = costCenterService;
+
             this._mapper = mapper;
         }
 
@@ -31,12 +36,12 @@ namespace Project.Controllers
         // GET: StevenDemoTables
         public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
+            await PopulateLookups();
 
             var priorityLevel = await projectRequestService.Display(searchName, searchPriority);
 
             var priorityLevelVM = _mapper.Map<PriorityLevelViewModel>(priorityLevel);
 
-            
             return View(priorityLevelVM);
         }
 
@@ -69,8 +74,10 @@ namespace Project.Controllers
         }
 
         // GET: StevenDemoTables/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            // populate the departments
+            await PopulateLookups();
             return View();
         }
 
@@ -79,24 +86,27 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentId")] ProjectRequestViewModel projectRequestViewModel)
+        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentsId, Departments")] ProjectRequestViewModel projectRequestViewModel)
         {
-            
             if (ModelState.IsValid)
             {
+
+
                 // first map ProjectRequestViewModel to a ProjectRequest
                 var record = _mapper.Map<ProjectRequest>(projectRequestViewModel);
+                // add departments
+                record.Departments = projectRequestViewModel.DepartmentsId != null && projectRequestViewModel.DepartmentsId.Any() ? string.Join(",", projectRequestViewModel.DepartmentsId) : "";
                 // split List<string> to comma separated string
                 record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
                 // call service
+                
+
+
                 await projectRequestService.Add(record);
 
                 return RedirectToAction(nameof(Index));
             
-            }
-            //map first
-            //parse it
-            
+            }           
 
             return View(projectRequestViewModel);
         }
@@ -108,7 +118,8 @@ namespace Project.Controllers
             {
                 return NotFound();
             }
-            //
+            // populate the departments
+            await PopulateLookups();
             var projectRequest = await _context.StevenDemoTable.FindAsync(id);
             
             if (projectRequest == null)
@@ -116,7 +127,8 @@ namespace Project.Controllers
                 return NotFound();
             }
             var projectRequestViewModel = _mapper.Map<ProjectRequestViewModel>(projectRequest);
-            
+
+
             return View(projectRequestViewModel);
         }
 
@@ -125,7 +137,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentId")] ProjectRequestViewModel projectRequestViewModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentsId, Departments")] ProjectRequestViewModel projectRequestViewModel)
         {
             
             if (id != projectRequestViewModel.Id)
@@ -139,6 +151,9 @@ namespace Project.Controllers
                 {
                     // first map ProjectRequestViewModel to a ProjectRequest
                     var record = _mapper.Map<ProjectRequest>(projectRequestViewModel);
+
+                    record.Departments = projectRequestViewModel.DepartmentsId != null && projectRequestViewModel.DepartmentsId.Any() ? string.Join(",", projectRequestViewModel.DepartmentsId) : "";
+
                     // split List<string> to comma separated string
                     record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
                     // call service
@@ -192,6 +207,24 @@ namespace Project.Controllers
         private bool StevenDemoTableExists(int id)
         {
             return _context.StevenDemoTable.Any(e => e.Id == id);
+        }
+
+
+
+        // private helper method to populate all the departments
+        private async Task PopulateLookups(ProjectRequestViewModel model = null /*null if no model passed in */)
+        {
+            var costCenterList = _mapper.Map<List<CostCenterViewModel>>(await costCenterService.Get());
+            var costCentersIdList = model?.Departments != null ? model.Departments.Split(",").ToList() : new List<string>();
+            
+            ViewData["CostCenters"] = costCenterList.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Description,
+                // choose to display only the departments
+                Selected = costCentersIdList.Contains(x.Id.ToString())
+            });
+           
         }
     }
 }

@@ -13,6 +13,8 @@ using Project.Data;
 using Project.Request.Services.Services;
 using Project.Request.Services.Interfaces;
 using Project.Models;
+using Project.Request.Data.Factory;
+using Project.Request.Web.Models;
 
 namespace Project
 {
@@ -29,14 +31,15 @@ namespace Project
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("StevenDemoWebsiteContext")), ServiceLifetime.Transient);
-           
+                    options.UseSqlServer(Configuration.GetConnectionString("OperationalConnection")), ServiceLifetime.Transient);
+
             // on start up, everytime we request service, it will addtransient
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
-
-
+            services.AddTransient<ICostCenterService, CostCenterService>();
+            services.AddTransient<IDbContextFactory, DbContextFactory>();
             services.AddAutoMapper(typeof(Startup));
         }
 

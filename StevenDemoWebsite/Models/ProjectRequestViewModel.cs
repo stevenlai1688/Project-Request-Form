@@ -45,8 +45,9 @@ namespace Project.Models
         [DisplayName("Business Justification and Strategic Benefit")]
         [Required]
         public List<string> BusinessJustification { get; set; }
-
-        
-
+        [DisplayName("Departments")]
+        public string Departments { get; set; }
+        [DisplayName("Departments")]
+        public IEnumerable<int> DepartmentsId { get; set; }
     }
 }
