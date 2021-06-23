@@ -88,6 +88,7 @@ namespace Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentsId, Departments")] ProjectRequestViewModel projectRequestViewModel)
         {
+            
             if (ModelState.IsValid)
             {
 
@@ -106,8 +107,8 @@ namespace Project.Controllers
 
                 return RedirectToAction(nameof(Index));
             
-            }           
-
+            }
+            await PopulateLookups();
             return View(projectRequestViewModel);
         }
 
@@ -172,7 +173,7 @@ namespace Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            
+            await PopulateLookups();
             return View(projectRequestViewModel);
         }
 

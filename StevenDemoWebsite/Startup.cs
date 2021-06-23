@@ -24,7 +24,10 @@ namespace Project
         {
             Configuration = configuration;
         }
-
+        // Reading .Net OAuth Authentication
+        // -> 3rd party authentication 
+        // authentication -> we know who you are
+        // authorization -> does user have permission
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
