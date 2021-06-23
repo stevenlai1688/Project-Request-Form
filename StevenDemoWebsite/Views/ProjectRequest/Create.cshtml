@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
 }
 
-<h1 style="font-weight:200">Create a Request</h1>
+<h1 >Create a Request</h1>
 
 <hr />
 <div class="row">
@@ -49,16 +49,22 @@
                 <textarea asp-for="EstimateTimeFrame" class="form-control"> </textarea>
             </div>
             @*Priority Level*@
-            <div class="input-group mb-4">
-                <label asp-for="PriorityLevel" class="input-group-text ">Priority Level</label>
-                <select asp-for="PriorityLevel">
-                    <option selected></option>
-                    <option value="Low">        Low         </option>
-                    <option value="Medium">     Medium      </option>
-                    <option value="High">       High        </option>
-                    <option value="Emergency">  Emergency   </option>
-                </select>
-                <span asp-validation-for="PriorityLevel" class="text-danger mx-md-2"></span>
+            @{
+                List<string> priorityLevel = new List<string>();
+                priorityLevel.Add("Low");
+                priorityLevel.Add("Medium");
+                priorityLevel.Add("High");
+                priorityLevel.Add("Emergency");
+            }
+            <div class="col-form-label">
+                <label asp-for="PriorityLevel" class="control-label">Priority Level</label>
+                @foreach (var priority in priorityLevel)
+                {
+                    <div class="form-check">
+                        <label><input asp-for="PriorityLevel" type="radio" value="@priority.ToString()" />@priority.ToString()</label>
+                        
+                    </div>
+                }
             </div>
             @*CostCenter*@
             <div class="form-group">
