@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Models;
 using Project.Request.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace Project.Controllers
 {
-
+    [Authorize]
     public class ProjectRequestController : Controller
     {
         private readonly StevenDemoWebsiteContext _context;
@@ -91,8 +93,6 @@ namespace Project.Controllers
             
             if (ModelState.IsValid)
             {
-
-
                 // first map ProjectRequestViewModel to a ProjectRequest
                 var record = _mapper.Map<ProjectRequest>(projectRequestViewModel);
                 // add departments
@@ -221,7 +221,7 @@ namespace Project.Controllers
             ViewData["CostCenters"] = costCenterList.Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = x.Description,
+                Text = x.Capitalized,
                 // choose to display only the departments
                 Selected = costCentersIdList.Contains(x.Id.ToString())
             });
