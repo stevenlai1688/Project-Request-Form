@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Project.Data;
 using Project.Request.Services.Services;
@@ -33,8 +33,9 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("OperationalConnection")), ServiceLifetime.Transient);
@@ -43,6 +44,19 @@ namespace Project
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
             services.AddTransient<ICostCenterService, CostCenterService>();
             services.AddTransient<IDbContextFactory, DbContextFactory>();
+
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
+
+            services.AddControllersWithViews(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            }).AddRazorRuntimeCompilation();
+
+            services.AddRazorPages();
             services.AddAutoMapper(typeof(Startup));
         }
 
@@ -64,6 +78,7 @@ namespace Project
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -71,6 +86,7 @@ namespace Project
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

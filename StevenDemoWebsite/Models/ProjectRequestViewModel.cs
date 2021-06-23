@@ -48,6 +48,7 @@ namespace Project.Models
         [DisplayName("Departments")]
         public string Departments { get; set; }
         [DisplayName("Departments")]
+        [Required]
         public IEnumerable<int> DepartmentsId { get; set; }
     }
 }

@@ -1,22 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - Project Request</title>
 
-        <link href="~/lib/bootstrap-theme-bootswatch-paper/css/paper.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Project Request</title>
 
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-        
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-theme-bootswatch-paper/css/paper.css" rel="stylesheet" />
 
-        <link href="~/lib/richText/richtext.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-        <link rel="stylesheet"
-              href="https://fonts.googleapis.com/css?family=Montserrat">
-    
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+    <link href="~/lib/richText/richtext.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+
     @RenderSection("Styles", false)
 
 </head>
@@ -31,7 +31,7 @@
 
             <ul class="nav navbar-nav" role="button">
 
-                <li class="dropdown" >
+                <li class="dropdown">
                     <a class="dropdown-toggle " data-toggle="dropdown">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </a>
@@ -43,6 +43,18 @@
                         <li>
                             <a asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Sign out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Sign In</a>
+                            </li>
+                        }
                     </ul>
                 </li>
             </ul>
