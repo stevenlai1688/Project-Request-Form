@@ -1,9 +1,11 @@
-# StevenDemoWebsite
-Demo ASP.NET core MVC website using Entity Framework Core for Axia Home Loans
+# Project Request
+Project Request: an ASP.NET core MVC website project that implements Entity Framework Core for Axia Home Loans
 
 This project make use of Model-View-Controller frame work from ASP.NET Core to generate webpage. 
 This project also make use of Entity Core Framework to create Db Context and Db Sets used to communicate with a SQL server.
-This project is designed with N-Tier Architechture in mind to divide responsibilities and separate dependencies with Inversion of Control.
+This project is designed with N-Tier Architechture in mind to divide responsibilities and separate dependencies with Inversion of Control and dependency injection.
 
-This project is separated into Data, Model, Service, and Web layer, each serving a purpose based on the principles of Separation of Concern
+This project is separated into Data, Model, Service, and Web layer, each layer serving a purpose and some depends on each others. The Database Context uses Dbsets to retrieve data from the database, which is then processed in the service request, which returns an Entity model that is modified by the Controller to become a ViewModel to display to the Views. 
+
+This project written is primarily in C# and C#html (Razor).
 
