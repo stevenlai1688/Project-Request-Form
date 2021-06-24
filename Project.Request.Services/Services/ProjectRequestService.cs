@@ -88,12 +88,18 @@ namespace Project.Request.Services.Services
         {
             using (var context = _context.create())
             {
-                var projectRequestTable = await context.StevenDemoTable.FindAsync(id);
+                var projectRequestTable = await Find(id);
                 context.StevenDemoTable.Remove(projectRequestTable);
                 await context.SaveChangesAsync();
                 return projectRequestTable;
             }
         }
-
+        public async Task<ProjectRequest> Find (int? id)
+        {
+            using(var context = _context.create())
+            {
+                return await context.StevenDemoTable.FindAsync(id);
+            }
+        }
     }
 }

@@ -14,5 +14,6 @@ namespace Project.Request.Services.Interfaces
         Task<ProjectRequest> Update(ProjectRequest table);
         Task<ProjectRequest> Add(ProjectRequest table);
         Task<ProjectRequest> Remove(int id);
+        Task<ProjectRequest> Find(int? id);
     }
 }
