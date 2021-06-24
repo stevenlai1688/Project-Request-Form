@@ -19,6 +19,11 @@ namespace Project.Request.Services.Services
         {
             _context = context;
         }
+        /// <summary>
+        /// a Service Tasks that creates an entry to CostCenter Database of the context 
+        /// </summary>
+        /// <param name="table">CostCenter Entity Model</param>
+        /// <returns>CostCenter Entity Model</returns>
         public async Task<CostCenter> Add(CostCenter table)
         {
             using (var context = _context.create())
@@ -30,7 +35,11 @@ namespace Project.Request.Services.Services
             }
 
         }
-
+        /// <summary>
+        /// a Service Tasks that delete an entry to CostCenter Database of the context 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<CostCenter> Delete(int? id)
         {
             // create new context everytime we call _context.create(),
@@ -42,7 +51,10 @@ namespace Project.Request.Services.Services
                 return table;
             }
         }
-
+        /// <summary>
+        /// a Service Tasks that retrieves an entry to CostCenter Database of the context based on Primary and Active Boolean expression 
+        /// </summary>
+        /// <returns>Enumerable Type of CostCenter</returns>
         // _context.CostCenter refers to the database, services retrieves database and return a type of entity model "CostCenter"
         public async Task<IEnumerable<CostCenter>> Get()
         {
@@ -54,7 +66,11 @@ namespace Project.Request.Services.Services
             }
             
         }
-
+        /// <summary>
+        /// a Service Tasks that Updates an entry to CostCenter Database of the context
+        /// </summary>
+        /// <param name="table">CostCenter Entity Model</param>
+        /// <returns>CostCenter Entity Model</returns>
         public async Task<CostCenter> Update(CostCenter table)
         {
             using (var context = _context.create())

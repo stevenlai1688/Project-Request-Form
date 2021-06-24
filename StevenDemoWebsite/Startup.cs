@@ -44,10 +44,10 @@ namespace Project
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
             services.AddTransient<ICostCenterService, CostCenterService>();
             services.AddTransient<IDbContextFactory, DbContextFactory>();
-
+            // add Azure AD to services
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
-
+            // add authorization to controller
             services.AddControllersWithViews(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -77,7 +77,7 @@ namespace Project
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            // authenticaiton
             app.UseAuthentication();
             app.UseAuthorization();
 

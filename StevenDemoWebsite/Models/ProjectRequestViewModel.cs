@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Models
 {
+    /// <summary>
+    /// Project Request View Model is the main ViewModel used to format and display all the ProjectRequest Model methods
+    /// </summary>
     public partial class ProjectRequestViewModel
     {
         
@@ -34,7 +37,6 @@ namespace Project.Models
 
         [DisplayName("Changes Requested")]
         public string RequestChanges { get; set; }
-
 
         [DisplayName("Effect on Organization")]
         public string RequestEffectsOnOrganization { get; set; }
