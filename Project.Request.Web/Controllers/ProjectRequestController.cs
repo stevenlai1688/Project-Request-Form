@@ -38,8 +38,8 @@ namespace Project.Controllers
         /// <summary>
         /// Index method which takes in searchName and searchPriority string and calls a service for the model and returns a viewmodel to the view
         /// </summary>
-        /// <param name="searchName">The name that matches the query in the database</param>
-        /// <param name="searchPriority">Priority that matches the query in the database</param>
+        /// <param name="searchName">The name that matches the name in the database</param>
+        /// <param name="searchPriority">Priority that matches the priority in the database</param>
         /// <returns>a View passed with PriorityLevelViewModel</returns>
         public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
