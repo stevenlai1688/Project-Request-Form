@@ -32,6 +32,7 @@ namespace Project.Models
         public string EstimateTimeFrame { get; set; }
         public string BusinessJustification { get; set; }
         public string Departments { get; set; }
+        public string ProjectName { get; set; }
 
     }
 }

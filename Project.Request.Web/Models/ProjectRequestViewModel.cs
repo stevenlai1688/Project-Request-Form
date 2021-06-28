@@ -52,5 +52,10 @@ namespace Project.Models
         [DisplayName("Departments")]
         [Required]
         public IEnumerable<int> DepartmentsId { get; set; }
+
+        [StringLength(50)]
+        [DisplayName("Project Name")]
+        [Required]
+        public string ProjectName { get; set; }
     }
 }
