@@ -21,7 +21,7 @@
 
 </head>
 <body style="font-family: 'Montserrat', sans-serif">
-    <nav class="navbar navbar-fixed-top navbar-inverse navbar-expand p-4">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-nav">
             <div class="navbar-header">
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">
@@ -46,5 +46,21 @@
     <script src="~/lib/richText/jquery.richtext.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
+
+    <noscript>
+        <style>
+            body {
+                opacity: 1;
+            }
+        </style>
+    </noscript>
+
+    <script type="text/javascript">
+        function showContent() {
+            document.body.classList.add("all-loaded");
+        }
+
+        window.onload = showContent;
+    </script>
 </body>
 </html>

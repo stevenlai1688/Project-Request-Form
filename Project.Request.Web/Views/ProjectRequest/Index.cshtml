@@ -3,29 +3,28 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <h1 style="font-weight:200">Index</h1>
 <!--html comment-->
 <div class="row">
-    <div class="col">
-        <a asp-action="Create" class="btn btn-outline-primary">Create New</a>
-    </div>
-    
-    <div class="col-form-label">
+
+    <div class="col-form-label col-md-12">
         <form asp-controller="ProjectRequest" asp-action="Index">
-            <p>
+            <a asp-action="Create" class="btn btn-outline-primary ">Create New</a>
+            <p class="pull-right">
+
                 @*search for priority*@
-                <select asp-for="SearchPriority" asp-items="Model.Priority"style="font-size:16px" >
-                    <option value="" > All </option>
+                <select asp-for="SearchPriority" asp-items="Model.Priority" style="font-size:16px">
+                    <option value=""> All </option>
                 </select>
                 @*search for name*@
                 <input type="text" asp-for="SearchName" />
                 <input type="submit" value="Filter by Name" class="btn btn-outline-secondary" />
 
-            </p>           
+            </p>
         </form>
     </div>
 </div>
@@ -37,6 +36,9 @@
             <th>
                 @*Changed from mode.RequestorName to model.StevenTables[0].RequestorName*@
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].ProjectName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestChanges)
@@ -79,6 +81,9 @@
                 @Html.DisplayFor(modelItem => item.RequestorName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.RequestChanges)
             </td>
             <td>
@@ -106,7 +111,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Departments)
             </td>
-            <td class="btn-group-sm">
+            <td class="btn-group-vertical ">
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:smaller">Edit</a>
                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Delete</a>

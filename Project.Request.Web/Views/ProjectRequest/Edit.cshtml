@@ -2,24 +2,28 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_LayoutNoMenu.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Edit the Request</h1>
 
 <hr />
 <div class="row">
-    <div class="col-md-12">
+    <div>
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="input-group-append mb-md-4">
-                <label asp-for="RequestorName" class="control-label col-form-label"></label>
-                <input type="text" asp-for="RequestorName" class="form-control mx-md-2" />
+            <div class="form-group form-inline">
+                <label asp-for="RequestorName" class="control-label"></label>
+                <input type="text" asp-for="RequestorName" class="form-control" />
                 @*Checking for validation*@
-                <span asp-validation-for="RequestorName" class="text-danger "></span>
+                <span asp-validation-for="RequestorName" class="text-danger"></span>
 
-                <label asp-for="DesiredCompletionDate" class="control-label col-form-label"></label>
-                <input asp-for="DesiredCompletionDate" class="form-control mx-md-2" />
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+
+                <label asp-for="DesiredCompletionDate" class="control-label"></label>
+                <input asp-for="DesiredCompletionDate" class="form-control" />
                 <span asp-validation-for="DesiredCompletionDate" class="text-danger "></span>
             </div>
             <div class="form-group">
@@ -76,37 +80,42 @@
             </div>
 
             @*Business Justification*@
-            <label asp-for="BusinessJustification" class="col-form-label text-wrap">Business Justification and Strategic Benefit</label>
-            <div class="input-group form-check-inline col-form-label-lg">
-                @{
-                    List<string> justifications = new List<string>();
-                    justifications.Add("Cost Savings");
-                    justifications.Add("Increased Revenue");
-                    justifications.Add("Increased Efficiencies");
-                    justifications.Add("Regulatory");
-                    justifications.Add("Compliance");
-                    justifications.Add("Upgrade");
-                    justifications.Add("Retention");
+            <div class="form-group">
+                <label asp-for="BusinessJustification" class="control-label"></label>
+                <div class="input-group form-check-inline col-form-label-lg">
+                    @{
+                        List<string> justifications = new List<string>();
+                        justifications.Add("Cost Savings");
+                        justifications.Add("Increased Revenue");
+                        justifications.Add("Increased Efficiencies");
+                        justifications.Add("Regulatory");
+                        justifications.Add("Compliance");
+                        justifications.Add("Upgrade");
+                        justifications.Add("Retention");
 
-                    foreach (string value in justifications)
-                    {
-                        <label><input class="input-group-sm mx-2" type="checkbox" value="@value.ToString()" name="BusinessJustification[]" />@value.ToString()</label>
+                        foreach (string value in justifications)
+                        {
+                            <label><input class="input-group-sm mx-2" type="checkbox" value="@value.ToString()" name="BusinessJustification[]" />@value.ToString()  &nbsp;</label>
+                        }
+
                     }
-
-                }
-                <span asp-validation-for="BusinessJustification" class="text-danger"></span>
+                    <br />
+                    <span asp-validation-for="BusinessJustification" class="text-danger"></span>
+                </div>
             </div>
 
-            <div class="form-group">
+
+            <div>
                 <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

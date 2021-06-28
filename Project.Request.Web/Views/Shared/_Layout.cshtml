@@ -8,20 +8,16 @@
 
     <link href="~/lib/bootstrap-theme-bootswatch-paper/css/paper.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-
+    <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
     <link href="~/lib/richText/richtext.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Montserrat">
-
     @RenderSection("Styles", false)
 
 </head>
-<body style="font-family: 'Montserrat', sans-serif">
-    <nav class="navbar navbar-inverse navbar-expand p-4">
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-nav">
             <div class=" navbar-header">
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">
@@ -29,7 +25,7 @@
                 </a>
             </div>
 
-            <ul class="nav navbar-nav" role="button">
+            <ul class="nav navbar-nav navbar-right" role="button">
 
                 <li class="dropdown ">
                     <a class="dropdown-toggle" data-toggle="dropdown">
@@ -65,10 +61,8 @@
 
         @RenderBody()
 
-        <footer class="border-top modal-footer text-muted">
-            <div class="container">
-                &copy; @DateTime.Now.Year - ProjectRequest - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - ProjectRequest - Axia Home Loans </p>
         </footer>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -76,5 +70,20 @@
     <script src="~/lib/richText/jquery.richtext.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
+    <noscript>
+        <style>
+            body {
+                opacity: 1;
+            }
+        </style>
+    </noscript>
+
+    <script type="text/javascript">
+        function showContent() {
+            document.body.classList.add("all-loaded");
+        }
+
+        window.onload = showContent;
+    </script>
 </body>
 </html>
