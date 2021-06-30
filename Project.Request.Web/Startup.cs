@@ -15,6 +15,7 @@ using Project.Request.Services.Interfaces;
 using Project.Models;
 using Project.Request.Data.Factory;
 using Project.Request.Web.Models;
+using Project.Request.Models.Settings;
 
 namespace Project
 {
@@ -35,7 +36,8 @@ namespace Project
         {
             
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
-            
+            services.Configure<SmtpSettings>(Configuration.GetSection("Smtp"));
+            services.Configure<MailAddressSettings>(Configuration.GetSection("MailAddressSettings"));
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("OperationalConnection")), ServiceLifetime.Transient);
@@ -44,6 +46,8 @@ namespace Project
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
             services.AddTransient<ICostCenterService, CostCenterService>();
             services.AddTransient<IDbContextFactory, DbContextFactory>();
+            services.AddTransient<IEmailService, EmailService>();
+
             // add Azure AD to services
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
