@@ -38,8 +38,8 @@ namespace Project.Controllers
         /// <summary>
         /// Index method which takes in searchName and searchPriority string and calls a service for the model and returns a viewmodel to the view
         /// </summary>
-        /// <param name="searchName">The name that matches the query in the database</param>
-        /// <param name="searchPriority">Priority that matches the query in the database</param>
+        /// <param name="searchName">The name that matches the name in the database</param>
+        /// <param name="searchPriority">Priority that matches the priority in the database</param>
         /// <returns>a View passed with PriorityLevelViewModel</returns>
         public async Task<IActionResult> Index(string searchName, string searchPriority)
         {
@@ -105,7 +105,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentsId, Departments")] ProjectRequestViewModel projectRequestViewModel)
+        public async Task<IActionResult> Create(ProjectRequestViewModel projectRequestViewModel)
         {
 
             if (ModelState.IsValid)
@@ -163,7 +163,7 @@ namespace Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RequestReason,RequestorName,DesiredCompletionDate,PriorityLevel,RequestDescription,RequestChanges,RequestEffectsOnOrganization,EstimateTimeFrame, BusinessJustification, DepartmentsId, Departments")] ProjectRequestViewModel projectRequestViewModel)
+        public async Task<IActionResult> Edit(int id, ProjectRequestViewModel projectRequestViewModel)
         {
 
             if (id != projectRequestViewModel.Id)

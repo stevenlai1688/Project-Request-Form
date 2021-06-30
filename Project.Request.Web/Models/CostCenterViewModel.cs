@@ -33,7 +33,7 @@ namespace Project.Models
             {
                 // making sure that if the string recieved is empty, then return an empty string
                 var capitalized = string.Empty;
-                if (string.IsNullOrEmpty(Description)) return string.Empty;
+                if (string.IsNullOrEmpty(Description)) return capitalized;
                 // otherwise, split the description into different words and put it in an array of strings
                 var arr = Description.Split(" ");
                 // another statement to catch the case where there is only one word in the array

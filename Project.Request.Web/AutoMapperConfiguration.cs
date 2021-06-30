@@ -11,7 +11,7 @@ namespace Project.Request.Web
     {
         public AutoMapperConfiguration()
         {
-
+            // create maps between the viewmodel and the entity models
             CreateMap<ProjectRequestViewModel, ProjectRequest>();
             CreateMap<ProjectRequest, ProjectRequestViewModel>();
 

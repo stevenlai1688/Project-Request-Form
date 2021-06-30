@@ -21,43 +21,13 @@
 
 </head>
 <body style="font-family: 'Montserrat', sans-serif">
-    <nav class="navbar navbar-inverse navbar-expand p-4">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-nav">
-            <div class=" navbar-header">
+            <div class="navbar-header">
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">
                     <img src="~/img/AxiaLogo.png" alt="Axia Logo" />
                 </a>
             </div>
-
-            <ul class="nav navbar-nav" role="button">
-
-                <li class="dropdown">
-                    <a class="dropdown-toggle " data-toggle="dropdown">
-                        <i class="fa fa-bars" aria-hidden="true"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-
-                        <li>
-                            <a asp-controller="ProjectRequest" asp-action="Index">ProjectRequest</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>
-                                <a asp-area="AzureAD" asp-controller="Account" asp-action="SignOut">Sign out</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a asp-area="AzureAD" asp-controller="Account" asp-action="SignIn">Sign In</a>
-                            </li>
-                        }
-                    </ul>
-                </li>
-            </ul>
         </div>
     </nav>
 
@@ -76,5 +46,21 @@
     <script src="~/lib/richText/jquery.richtext.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
+
+    <noscript>
+        <style>
+            body {
+                opacity: 1;
+            }
+        </style>
+    </noscript>
+
+    <script type="text/javascript">
+        function showContent() {
+            document.body.classList.add("all-loaded");
+        }
+
+        window.onload = showContent;
+    </script>
 </body>
 </html>
