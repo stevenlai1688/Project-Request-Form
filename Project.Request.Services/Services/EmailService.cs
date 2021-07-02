@@ -13,10 +13,9 @@ namespace Project.Request.Services.Services
     {
         private readonly IOptions<SmtpSettings> _smtpSettings;
         private readonly IOptions<MailAddressSettings> _mailAddressSettings;
-        
+
         private SmtpClient SmtpClient { get; }
 
-        public EmailService(IOptions<SmtpSettings> smtpSettings, IOptions<MailAddressSettings> mailAddressSettings)
         {
             _mailAddressSettings = mailAddressSettings;
             _smtpSettings = smtpSettings;
