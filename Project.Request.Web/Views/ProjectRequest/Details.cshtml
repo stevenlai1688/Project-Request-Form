@@ -7,9 +7,9 @@
 
 <h1>Details</h1>
 
-<div>
+<div style="margin-left: 4px">
     <hr />
-    <dl class="row">
+    <dl class="row col-form-label"style="margin-left: 4px" >
         <dt class="col-4">
             @Html.DisplayNameFor(model => model.RequestorName)
         </dt>
@@ -92,6 +92,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Edit</a> |
     <a asp-action="Index" class="btn btn-outline-secondary ">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a> 
+
 </div>

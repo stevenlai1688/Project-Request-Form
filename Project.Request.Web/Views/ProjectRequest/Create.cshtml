@@ -8,7 +8,7 @@
 <h1>Create a Request</h1>
 
 <hr />
-<div class="row">
+<div class="row" style="margin-left: 4px">
     <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,31 +25,37 @@
 
                 <label asp-for="DesiredCompletionDate" class="control-label"></label>
                 <input asp-for="DesiredCompletionDate" class="form-control" />
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Enter The Desired Project Completion Date"></label>
                 <span asp-validation-for="DesiredCompletionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="RequestChanges" class="control-label"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please List Out Some Changes To Be Made For The Project"></label>
                 <span asp-validation-for="RequestChanges" class="text-danger"></span>
                 <textarea asp-for="RequestChanges" class="form-control"> </textarea>
             </div>
             <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Detail Reason For Requesting This Change"></label>
                 <span asp-validation-for="RequestReason" class="text-danger"></span>
                 <textarea asp-for="RequestReason" class="form-control"> </textarea>
             </div>
             <div class="form-group">
                 <label asp-for="RequestDescription" class="control-label"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Give More Details About The Changes To Be Made"></label>
                 <span asp-validation-for="RequestDescription" class="text-danger"></span>
                 <textarea asp-for="RequestDescription" class="form-control"> </textarea>
             </div>
 
             <div class="form-group">
                 <label asp-for="RequestEffectsOnOrganization" class="control-label"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Address How This Change Effects The Organization"></label>
                 <span asp-validation-for="RequestEffectsOnOrganization" class="text-danger"></span>
                 <textarea asp-for="RequestEffectsOnOrganization" class="form-control"> </textarea>
             </div>
             <div class="form-group">
                 <label asp-for="EstimateTimeFrame" class="control-label"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Estimate The Estimated Time Frame To Complete This Project"></label>
                 <span asp-validation-for="EstimateTimeFrame" class="text-danger"></span>
                 <textarea asp-for="EstimateTimeFrame" class="form-control"> </textarea>
             </div>
@@ -63,6 +69,7 @@
             }
             <div class="col-form-label">
                 <label asp-for="PriorityLevel" class="control-label">Priority Level</label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Select The Priority Level Of This Project"></label>
                 @foreach (var priority in priorityLevel)
                 {
                     <div class="form-check">
@@ -75,6 +82,7 @@
             <div class="form-group">
 
                 <label asp-for="DepartmentsId" class="control-label">Department</label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Select The Departments Affected By This Project"></label>
                 <select asp-for="DepartmentsId" name="DepartmentsId[]" class="form-control" asp-items="ViewBag.CostCenters">
                 </select>
                 <span asp-validation-for="DepartmentsId" class="text-danger"></span>
@@ -106,12 +114,9 @@
             </div>
 
             <div>
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-
-
-            <div class="form-group">
                 <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

@@ -470,6 +470,7 @@ select[multiple] {
 
 p {
     font-size: larger !important;
+    text-align: center; !important
 }
 
 label {

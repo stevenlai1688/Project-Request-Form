@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -10,5 +11,6 @@ namespace Project.Request.Services.Interfaces
     public interface IEmailService
     {
         bool sendEmail(MailMessage mailMessage);
+        Task<bool> CreateEmail(ProjectRequest projectRequest);
     }
 }

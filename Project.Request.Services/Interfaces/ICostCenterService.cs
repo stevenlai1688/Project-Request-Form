@@ -13,5 +13,6 @@ namespace Project.Request.Services.Interfaces
         Task<CostCenter> Add(CostCenter table);
         Task<CostCenter> Update(CostCenter table);
         Task<CostCenter> Delete(int? id);
+        Task<CostCenter> Get(int? id);
     }
 }

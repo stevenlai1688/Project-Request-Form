@@ -11,6 +11,8 @@ using Project.Models;
 using Project.Request.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
+using Project.Request.Models.Settings;
+using Microsoft.Extensions.Options;
 
 namespace Project.Controllers
 {
@@ -18,19 +20,24 @@ namespace Project.Controllers
     public class ProjectRequestController : Controller
     {
         private readonly StevenDemoWebsiteContext _context;
-        private readonly IProjectRequestService projectRequestService;
-        private readonly ICostCenterService costCenterService;
+        private readonly IProjectRequestService _projectRequestService;
+        private readonly ICostCenterService _costCenterService;
         private readonly IMapper _mapper;
+        private readonly IOptions<MailAddressSettings> _mailAddressSettings;
+        private readonly IEmailService _emailService;
 
-        public ProjectRequestController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, ICostCenterService costCenterService, IMapper mapper)
+
+        public ProjectRequestController(StevenDemoWebsiteContext context, IProjectRequestService projectRequestService, ICostCenterService costCenterService, IMapper mapper, IOptions<MailAddressSettings> mailAddressSettings, IEmailService emailService)
         {
             _context = context;
             // initialize all the Interface for Inversion of Control
-            this.projectRequestService = projectRequestService;
+            this._projectRequestService = projectRequestService;
 
-            this.costCenterService = costCenterService;
+            this._costCenterService = costCenterService;
 
             this._mapper = mapper;
+            this._mailAddressSettings = mailAddressSettings;
+            this._emailService = emailService;
         }
 
 
@@ -46,7 +53,7 @@ namespace Project.Controllers
             // populate all the description of Cost Center
             await PopulateLookups();
 
-            var priorityLevelModel = await projectRequestService.Display(searchName, searchPriority);
+            var priorityLevelModel = await _projectRequestService.Display(searchName, searchPriority);
             // map PriorityLevel to a PriorityLevel ViewModel
             var priorityLevelViewModel = _mapper.Map<PriorityLevelViewModel>(priorityLevelModel);
 
@@ -65,7 +72,7 @@ namespace Project.Controllers
                 return NotFound();
             }
             // call the service to retrieve the model from the context
-            var projectRequestModel = await projectRequestService.Get(id);
+            var projectRequestModel = await _projectRequestService.Get(id);
             if (projectRequestModel == null)
             {
                 return NotFound();
@@ -117,7 +124,9 @@ namespace Project.Controllers
                 // fill the BusinessJustification of the model by splitting the List<string> of ProjectRequestViewModel to comma separated string
                 record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
                 // call service to add all the records
-                await projectRequestService.Add(record);
+                await _projectRequestService.Add(record);
+                // send creation email
+                await _emailService.CreateEmail(record);
                 // return back to the Index
                 return RedirectToAction(nameof(Index));
 
@@ -141,7 +150,7 @@ namespace Project.Controllers
             // populate the departments
             await PopulateLookups();
             // call the projectRequestService to find the specific entry based on id
-            var projectRequest = await projectRequestService.Find(id);
+            var projectRequest = await _projectRequestService.Find(id);
 
             if (projectRequest == null)
             {
@@ -183,7 +192,7 @@ namespace Project.Controllers
                     // fill the BusinessJustification of the model by splitting the List<string> of ProjectRequestViewModel to comma separated string
                     record.BusinessJustification = string.Join(",", projectRequestViewModel.BusinessJustification);
                     // call service to update the record
-                    await projectRequestService.Update(record);
+                    await _projectRequestService.Update(record);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -216,7 +225,7 @@ namespace Project.Controllers
                 return NotFound();
             }
             // call the service to retrieve the Model based on the Id
-            var projectRequestModel = await projectRequestService.Get(id);
+            var projectRequestModel = await _projectRequestService.Get(id);
             // map the ProjectRequest Model to a ViewModel
             var projectRequestViewModel = _mapper.Map<ProjectRequestViewModel>(projectRequestModel);
 
@@ -238,7 +247,7 @@ namespace Project.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             // call the projectRequestService to remove the entry based on the id
-            var projectRequestViewModel = await projectRequestService.Remove(id);
+            var projectRequestViewModel = await _projectRequestService.Remove(id);
             // redirect to Index
             return RedirectToAction(nameof(Index));
         }
@@ -260,7 +269,7 @@ namespace Project.Controllers
         private async Task PopulateLookups(ProjectRequestViewModel model = null /*null if no model passed in */)
         {
             // map a list of CostCenter Model to a list of CostCenterViewModel based on the condition determined by the costCenterService
-            var costCenterList = _mapper.Map<List<CostCenterViewModel>>(await costCenterService.Get());
+            var costCenterList = _mapper.Map<List<CostCenterViewModel>>(await _costCenterService.Get());
             // parse all the Departments to the list. ' ? :' operator evaluates the boolean expression and returns the result of one of two expressions
             // so if the model(nullable).departments is not null, then split departments to list based on comma, otherwise create a new list of string
             var costCentersIdList = model?.Departments != null ? model.Departments.Split(",").ToList() : new List<string>();
@@ -275,5 +284,6 @@ namespace Project.Controllers
             });
 
         }
+
     }
 }

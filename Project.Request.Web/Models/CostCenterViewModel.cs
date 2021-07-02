@@ -19,10 +19,9 @@ namespace Project.Models
         public string Description { get; set; }
         [DisplayName("Active")]
         public bool Active { get; set; }
-        [DisplayName("Modified By")] 
+        [DisplayName("Modified By")]
         public string ModifiedBy { get; set; }
-        [DisplayName("Modified Date")] 
-        
+        [DisplayName("Modified Date")]         
         public DateTime? ModifiedDate { get; set; }
         /// <summary>
         /// a helper method that takes the string recieved from Description and Capitalize the first letter of each word

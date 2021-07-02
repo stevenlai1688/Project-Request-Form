@@ -80,5 +80,13 @@ namespace Project.Request.Services.Services
                 return table;
             }
         }
+
+        public async Task<CostCenter> Get(int? id)
+        {
+            using (var context = _context.create())
+            {
+                return await context.CostCenter.SingleOrDefaultAsync(x => x.Id == id);
+            }
+        }
     }
 }
