@@ -9,5 +9,7 @@ This project is separated into Data, Model, Service, and Web layer, with each la
 
 Furthermore, I incorporated Azure AD service By modifying appsetting.json and Startup.cs in order to utilize OAuth2.0 to Authenticate users using microsoft's login service.
 
+Additionally, I created an Email Service that sends email using Smtp and MailAddress configuration in the appsetting to direct user-created project request entry to our email folders.
+
 This project written is primarily in C# and C#html (Razor).
 
