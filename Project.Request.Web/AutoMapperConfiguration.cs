@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Project.Models;
+﻿using AutoMapper;
+using Project.Request.Models.DataModels;
+using Project.Request.Web.Models;
 
 namespace Project.Request.Web
 {

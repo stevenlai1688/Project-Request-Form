@@ -4,6 +4,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">
+        Welcome
+        @{
+            var names = User.Identity.Name.Split("@");
+            var name = names[0];
+            var firstName = name.Split(".")[0];
+            var capitalizedFirst = firstName.Substring(0, 1).ToUpper() + firstName.Substring(1);
+        }
+        @capitalizedFirst
+    </h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

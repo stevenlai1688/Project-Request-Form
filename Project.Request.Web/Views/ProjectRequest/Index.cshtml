@@ -1,122 +1,125 @@
-﻿@*Changed Model to PriorityLevelViewModel, which allows us to select movies based on priority levels, but we need to use instances of StevenDemoTable object*@
-@model Project.Models.PriorityLevelViewModel
+﻿@*Changed Model to PriorityLevelViewModel, which allows us to select movies based on priority levels, but we need to use instances of ProjectRequest object*@
+@model Project.Request.Web.Models.PriorityLevelViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div style="margin-inline: 50px 50px">
+    <h2>List of Project Requests</h2>
+    <!--html comment-->
+    <div class="row">
 
-<h1 style="font-weight:200">Index</h1>
-<!--html comment-->
-<div class="row">
+        <div class="col-form-label col-md-12">
+            <form asp-controller="ProjectRequest" asp-action="Index">
+                <a asp-action="Create" class="btn btn-outline-secondary ">Create New</a>
+                <p class="pull-right">
 
-    <div class="col-form-label col-md-12">
-        <form asp-controller="ProjectRequest" asp-action="Index">
-            <a asp-action="Create" class="btn btn-outline-secondary ">Create New</a>
-            <p class="pull-right">
+                    @*search for priority*@
+                    <select asp-for="SearchPriority" asp-items="Model.Priority" style="line-height: 3.1; font-size: 16px">
+                        <option value="">Priority Level - All &nbsp; &nbsp;</option>
+                    </select>
+                    @*search for name*@
+                    <input type="text" asp-for="SearchName" />
+                    <input type="submit" value="Filter" class="btn btn-secondary" style="font-weight:bold" />
 
-                @*search for priority*@
-                <select asp-for="SearchPriority" asp-items="Model.Priority" style="line-height: 1.8; font-size:16px" >
-                    <option value="">Priority Level - All &nbsp; &nbsp;</option>
-                </select>
-                @*search for name*@
-                <input type="text" asp-for="SearchName" />
-                <input type="submit" value="Filter by Name" class="btn btn-link" />
-
-            </p>
-        </form>
+                </p>
+            </form>
+        </div>
     </div>
+
+    <table class="table table-striped tablesorter">
+        <thead>
+            <tr>
+                <th data-placeholder="Select...">
+                    @*Changed from mode.RequestorName to model.StevenTables[0].RequestorName*@
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestorName)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].ProjectName)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestChanges)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestReason)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestDescription)
+                </th>
+
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestEffectsOnOrganization)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].DesiredCompletionDate)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].PriorityLevel)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].BusinessJustification)
+                </th>
+                <th data-placeholder="Select...">
+                    @Html.DisplayNameFor(model => model.ProjectRequestTables[0].Departments)
+                </th>
+                <th>
+                    Actions
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @*changed from Model to Model.StevenTables*@
+            @foreach (var item in Model.ProjectRequestTables)
+            {
+                <tr style="font-size:13px;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestChanges)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestReason)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestEffectsOnOrganization)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DesiredCompletionDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PriorityLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BusinessJustification)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Departments)
+                    </td>
+                    <td class="btn-group" style="border: hidden">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:smaller; font-weight:bold">Edit</a>
+                        @*<a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller; font-weight: bold">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller; font-weight: bold">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{ await Html.RenderPartialAsync("~/Views/Shared/_Pager.cshtml"); }
 </div>
 
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                @*Changed from mode.RequestorName to model.StevenTables[0].RequestorName*@
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestorName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].ProjectName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestChanges)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestReason)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestDescription)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].RequestEffectsOnOrganization)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].EstimateTimeFrame)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].DesiredCompletionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].PriorityLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].BusinessJustification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectRequestTables[0].Departments)
-            </th>
-            <th></th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @*changed from Model to Model.StevenTables*@
-        @foreach (var item in Model.ProjectRequestTables)
-        {
-        <tr style="font-size:13px">
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestChanges)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestEffectsOnOrganization)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstimateTimeFrame)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DesiredCompletionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriorityLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BusinessJustification)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Departments)
-            </td>
-            <td class="btn-group-vertical ">
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-link" style="font-size:smaller">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-link" style="font-size: smaller">Delete</a>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script src="~/lib/tablesorter/jquery.tablesorter.bundle.min.js"></script>
+    <script src="~/js/tablesorter-handler.js"></script>
+}

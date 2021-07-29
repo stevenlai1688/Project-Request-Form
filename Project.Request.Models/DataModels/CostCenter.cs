@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Project.Models
+namespace Project.Request.Models.DataModels
 {
     public class CostCenter
     {

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Project.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.Request.Models.DataModels;
 
-namespace Project.Data
+namespace Project.Request.Data
 {
     public class StevenDemoWebsiteContext : DbContext
     {
-        public StevenDemoWebsiteContext (DbContextOptions<StevenDemoWebsiteContext> options)
+        public StevenDemoWebsiteContext(DbContextOptions<StevenDemoWebsiteContext> options)
             : base(options)
         {
         }
 
-        public virtual DbSet<ProjectRequest> StevenDemoTable { get; set; }
+        public virtual DbSet<ProjectRequest> ProjectRequest { get; set; }
         public virtual DbSet<CostCenter> CostCenter { get; set; }
     }
-}
+}   

@@ -3636,7 +3636,7 @@ tbody.collapse.in {
     bottom: 100%;
     margin-bottom: 2px;
 }
-@media (min-width: 768px) {
+@media {
     .navbar-right .dropdown-menu {
         left: auto;
         right: 0;
@@ -7184,7 +7184,7 @@ input[type=number],
 [type=email].form-control,
 [type=tel].form-control,
 [contenteditable].form-control {
-    padding: 0;
+    padding: 10px;
     border: none;
     border-radius: 0;
     -webkit-appearance: none;

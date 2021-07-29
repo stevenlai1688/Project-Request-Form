@@ -1,22 +1,26 @@
-﻿using Microsoft.Extensions.Options;
-using Project.Models;
-using Project.Request.Models.Settings;
-using Project.Request.Services.Interfaces;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Project.Request.Models.DataModels;
+using Project.Request.Models.Settings;
+using Project.Request.Services.Helpers;
+using Project.Request.Services.Interfaces;
 
 namespace Project.Request.Services.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IOptions<SmtpSettings> _smtpSettings;
+        private readonly HtmlTemplate _htmlTemplate;
         private readonly IOptions<MailAddressSettings> _mailAddressSettings;
+        private readonly IOptions<SmtpSettings> _smtpSettings;
 
-        private SmtpClient SmtpClient { get; }
-
+        public EmailService(IOptions<SmtpSettings> smtpSettings, IOptions<MailAddressSettings> mailAddressSettings,
+            HtmlTemplate htmlTemplate)
         {
+            _htmlTemplate = htmlTemplate;
             _mailAddressSettings = mailAddressSettings;
             _smtpSettings = smtpSettings;
             // create a new SMTP client
@@ -30,7 +34,10 @@ namespace Project.Request.Services.Services
                 EnableSsl = true
             };
         }
-        public bool sendEmail(MailMessage mailMessage)
+
+        private SmtpClient SmtpClient { get; }
+
+        public bool SendEmail(MailMessage mailMessage)
         {
             try
             {
@@ -43,27 +50,28 @@ namespace Project.Request.Services.Services
                 return false;
             }
         }
+
         public async Task<bool> CreateEmail(ProjectRequest projectRequest)
         {
             if (projectRequest.Id == 0) return false;
             // format message body
-            string messageBody = "<h1>Project Request</h1>" +
-                $"<p><h4>Project Name:</h4> {projectRequest.ProjectName}</p>" +
-                $"<p><h4>Requestor Name:</h4> {projectRequest.RequestorName}</p>" +
-                $"<p><h4>Desired Completion Date:</h4> {projectRequest.DesiredCompletionDate}</p>" +
+            // use htmlTemplate helper class and dictionary to map the variable names with keys and return a string html template
+            var messageBody = _htmlTemplate.GetFullTemplate("Template/MessageBody.html", new Dictionary<string, string>
+            {
+                {"projectName", projectRequest.ProjectName},
+                {"requestorName", projectRequest.RequestorName},
+                {"completionDate", projectRequest.DesiredCompletionDate.ToLongDateString()},
+                {"description", projectRequest.RequestDescription},
+                {"changes", projectRequest.RequestChanges},
+                {"reason", projectRequest.RequestReason},
+                {"effects", projectRequest.RequestEffectsOnOrganization},
+                {"departments", projectRequest.Departments},
+                {"priority", projectRequest.PriorityLevel},
+                {"businessJustification", projectRequest.BusinessJustification.Replace(",", " and ")}
+            });
 
-                $"<p><h4>Request Description:</h4> {projectRequest.RequestDescription}</p>" +
-                $"<p><h4>Request Changes:</h4> {projectRequest.RequestChanges}</p>" +
-                $"<p><h4>Request Reason:</h4> {projectRequest.RequestReason}</p>" +
-                $"<p><h4>Request Effects On Organization:</h4> {projectRequest.RequestEffectsOnOrganization}</p>" +
-
-
-                $"<p><h4>Departments Affected:</h4> {projectRequest.Departments}</p>" +
-                $"<p><h4>Estimated Timeframe:</h4> {projectRequest.EstimateTimeFrame}</p>" +
-                $"<p><h4>PriorityLevel:</h4> {projectRequest.PriorityLevel}</p>" +
-                $"<p><h4>Business Justification:</h4> {projectRequest.BusinessJustification.Replace(",", " and")}";
-
-
+            if (messageBody == "") throw new Exception();
+            // create a new mail message object with from, subject, body fields
             var mailMessage = new MailMessage
             {
                 From = new MailAddress(_mailAddressSettings.Value.FromAddress, _mailAddressSettings.Value.FromName),
@@ -71,15 +79,13 @@ namespace Project.Request.Services.Services
                 Body = messageBody,
                 IsBodyHtml = true
             };
-            // retrieve a list of ToAdresses
+            // retrieve a list of ToAdresses if there are more than one 
             var mailToAddresses = _mailAddressSettings.Value.GetMailAddresses();
             foreach (var mailToAddress in mailToAddresses)
-            {
-                // if there are multiple to addresses, add them to the To
+                // if there are multiple to addresses, add them to the 'To' field as well
                 mailMessage.To.Add(mailToAddress);
-            }
-            return sendEmail(mailMessage);
-        }
 
+            return SendEmail(mailMessage);
+        }
     }
 }

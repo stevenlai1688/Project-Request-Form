@@ -1,16 +1,12 @@
-﻿using Project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
+﻿using System.Net.Mail;
 using System.Threading.Tasks;
+using Project.Request.Models.DataModels;
 
 namespace Project.Request.Services.Interfaces
 {
     public interface IEmailService
     {
-        bool sendEmail(MailMessage mailMessage);
+        bool SendEmail(MailMessage mailMessage);
         Task<bool> CreateEmail(ProjectRequest projectRequest);
     }
 }

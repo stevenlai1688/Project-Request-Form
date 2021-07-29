@@ -1,122 +1,144 @@
-﻿@model Project.Models.ProjectRequestViewModel
+﻿@model Project.Request.Web.Models.ProjectRequestViewModel
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create a Request</h1>
 
-<hr />
-<div class="row" style="margin-left: 4px">
+<div class="row" style="margin-inline: 50px 50px">
+    <h2>Create a Request</h2>
+
+    <hr />
     <div>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group form-inline">
-                <label asp-for="RequestorName" class="control-label"></label>
-                <input type="text" asp-for="RequestorName" class="form-control" />
-                @*Checking for validation*@
-                <span asp-validation-for="RequestorName" class="text-danger"></span>
-
-                <label asp-for="ProjectName" class="control-label"></label>
-                <input asp-for="ProjectName" class="form-control" />
-                <span asp-validation-for="ProjectName" class="text-danger"></span>
-
-                <label asp-for="DesiredCompletionDate" class="control-label"></label>
-                <input asp-for="DesiredCompletionDate" class="form-control" />
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Enter The Desired Project Completion Date"></label>
-                <span asp-validation-for="DesiredCompletionDate" class="text-danger"></span>
+            <div class="form-group form-inline" style="vertical-align: bottom">
+                <div class="col-md-12" style="padding-left: initial; padding-right: initial;">
+                    <label asp-for="ProjectName" class="control-label"></label>
+                    <input asp-for="ProjectName" class="form-control" style="width: 100%" />
+                    <span asp-validation-for="ProjectName" class="text-danger"></span>
+                </div>
             </div>
+            <br />
+
+            <div class="form-group form-inline" style="vertical-align: bottom;">
+                <div class="col-md-6" style="padding-left: initial">
+                    <label asp-for="RequestorName" class="control-label"></label>
+                    <input type="text" asp-for="RequestorName" class="form-control" style="width: 100%" />
+                    @*Checking for validation*@
+                    <span asp-validation-for="RequestorName" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6" style="padding-left: initial">
+                    <label asp-for="DesiredCompletionDate" class="control-label"></label>
+                    <input asp-for="DesiredCompletionDate" class="form-control" style="line-height: 27px; width: 100%" />
+                    <span asp-validation-for="DesiredCompletionDate" class="text-danger"></span>
+
+                </div>
+
+            </div>
+            <br />
             <div class="form-group">
                 <label asp-for="RequestChanges" class="control-label"></label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please List Out Some Changes To Be Made For The Project"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="List out some changes for the proposed project"></label>
                 <span asp-validation-for="RequestChanges" class="text-danger"></span>
                 <textarea asp-for="RequestChanges" class="form-control"> </textarea>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Detail Reason For Requesting This Change"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Detail reason for requesting this change"></label>
                 <span asp-validation-for="RequestReason" class="text-danger"></span>
                 <textarea asp-for="RequestReason" class="form-control"> </textarea>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="RequestDescription" class="control-label"></label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Give More Details About The Changes To Be Made"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Add more details"></label>
                 <span asp-validation-for="RequestDescription" class="text-danger"></span>
                 <textarea asp-for="RequestDescription" class="form-control"> </textarea>
             </div>
-
+            <br />
             <div class="form-group">
                 <label asp-for="RequestEffectsOnOrganization" class="control-label"></label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Address How This Change Effects The Organization"></label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Address how this change effects the organization"></label>
                 <span asp-validation-for="RequestEffectsOnOrganization" class="text-danger"></span>
                 <textarea asp-for="RequestEffectsOnOrganization" class="form-control"> </textarea>
             </div>
-            <div class="form-group">
-                <label asp-for="EstimateTimeFrame" class="control-label"></label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Estimate The Estimated Time Frame To Complete This Project"></label>
-                <span asp-validation-for="EstimateTimeFrame" class="text-danger"></span>
-                <textarea asp-for="EstimateTimeFrame" class="form-control"> </textarea>
-            </div>
+
             @*Priority Level*@
             @{
-                List<string> priorityLevel = new List<string>();
+                var priorityLevel = new List<string>();
                 priorityLevel.Add("Low");
                 priorityLevel.Add("Medium");
                 priorityLevel.Add("High");
                 priorityLevel.Add("Emergency");
             }
-            <div class="col-form-label">
-                <label asp-for="PriorityLevel" class="control-label">Priority Level</label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Select The Priority Level Of This Project"></label>
-                @foreach (var priority in priorityLevel)
-                {
-                    <div class="form-check">
-                        <label><input asp-for="PriorityLevel" type="radio" value="@priority.ToString()" />@priority.ToString()</label>
-
-                    </div>
-                }
-            </div>
-            @*CostCenter*@
             <div class="form-group">
+                <div class="col-md-3" style="padding-left: initial">
+                    @*Priority Level*@
+                    <label asp-for="PriorityLevel" class="control-label">Priority Level</label>
 
-                <label asp-for="DepartmentsId" class="control-label">Department</label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Please Select The Departments Affected By This Project"></label>
-                <select asp-for="DepartmentsId" name="DepartmentsId[]" class="form-control" asp-items="ViewBag.CostCenters">
-                </select>
-                <span asp-validation-for="DepartmentsId" class="text-danger"></span>
-            </div>
-
-            @*Business Justification*@
-            <div class="form-group">
-                <label asp-for="BusinessJustification" class="control-label"></label>
-                <div class="input-group form-check-inline col-form-label-lg">
-                    @{
-                        List<string> justifications = new List<string>();
-                        justifications.Add("Cost Savings");
-                        justifications.Add("Increased Revenue");
-                        justifications.Add("Increased Efficiencies");
-                        justifications.Add("Regulatory");
-                        justifications.Add("Compliance");
-                        justifications.Add("Upgrade");
-                        justifications.Add("Retention");
-
-                        foreach (string value in justifications)
-                        {
-                            <label><input class="input-group-sm" type="checkbox" value="@value.ToString()" name="BusinessJustification[]" />@value.ToString() &nbsp;</label>
-                        }
-
+                    &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the priority level of this project"></label>
+                    @foreach (var priority in priorityLevel)
+                    {
+                        <br />
+                        <label>
+                            <input asp-for="PriorityLevel" type="radio" value="@priority" class="form-check" />@priority
+                        </label>
                     }
                     <br />
-                    <span asp-validation-for="BusinessJustification" class="text-danger"></span>
+                    <span asp-validation-for="PriorityLevel" class="text-danger"></span>
+                </div>
+
+                @*Business Justification*@
+                <div class="col-md-5" style="padding-left: initial">
+                    <label asp-for="BusinessJustification" class="control-label"></label>
+                    &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the reasoning for initiating this project"></label>
+                    <div class="container" style="padding-left: 0px">
+
+                        <div class="row" onsubmit="return validation()">
+                            <div class="col-md-3" style="padding-right: 0px">
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Compliance" name="BusinessJustification[]" onclick="clickedValidation()" />Compliance &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Efficiencies" name="BusinessJustification[]" onclick="clickedValidation()" />Increased Efficiencies &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Cost Savings" name="BusinessJustification[]" onclick="clickedValidation()" />Cost Savings &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Revenue" name="BusinessJustification[]" onclick="clickedValidation()" />Increased Revenue&nbsp;</label>
+                            </div>
+                            <div class="col-md-2">
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Regulatory" name="BusinessJustification[]" onclick="clickedValidation()" />Regulatory &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Retention" name="BusinessJustification[]" onclick="clickedValidation()" />Retention &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Upgrade" name="BusinessJustification[]" onclick="clickedValidation()" /> Upgrade &nbsp;</label>
+
+                            </div>
+                        </div>
+                        <span asp-validation-for="BusinessJustification" class="text-danger" id="validationMessage"></span>
+
+                    </div>
+
+                </div>
+
+                <label asp-for="DepartmentsId" class="control-label">Department</label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the departments affect by this project"></label>
+                <br>
+                <div class="col-md-4" style="padding-left: initial; padding-right: initial; overflow-y:scroll; height:150px" onsubmit="return validationDepartments()">
+
+                    @foreach (var items in ViewBag.CostCenters)
+                    {
+                        <label>
+                            <input type="checkbox" value="@items.Value" name="DepartmentsId[]" onclick="clickedValidationDepartment()" /> @items.Value &nbsp;
+                        </label>
+                        <br />
+                    }
+                    @*<input asp-for="DepartmentsId" type="checkbox" class="form-control" style="min-height: 120px; width: 100%;" asp-items="ViewBag.CostCenters" required>*@
+                    <span asp-validation-for="DepartmentsId" class="text-danger" id="validationMessageDepartment"></span>
+                    <br />
                 </div>
             </div>
-
-            <div>
-                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
-
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div style="padding-top:100px">
+                <a asp-action="Index" class="btn btn-outline-secondary" style="font-size: smaller">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-primary" style="font-size: smaller" onclick="validation(); validationDepartments();" />
             </div>
         </form>
     </div>
@@ -124,5 +146,5 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Project.Request.Web.Models
+﻿namespace Project.Request.Models
 {
     public class ConnectionStrings
     {

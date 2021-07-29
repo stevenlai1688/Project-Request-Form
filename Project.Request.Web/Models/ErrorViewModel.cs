@@ -1,9 +1,7 @@
-using System;
-
-namespace Project.Models
+namespace Project.Request.Web.Models
 {
     /// <summary>
-    /// Error View Model for when webpage throws an error
+    ///     Error View Model for when webpage throws an error
     /// </summary>
     public class ErrorViewModel
     {

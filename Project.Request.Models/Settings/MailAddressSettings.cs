@@ -1,10 +1,6 @@
-﻿using Project.Request.Models.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
+using Project.Request.Models.Extensions;
 
 namespace Project.Request.Models.Settings
 {
@@ -26,13 +22,11 @@ namespace Project.Request.Models.Settings
                 var toNames = ToName.Split(',');
 
                 // add each addresses as a list
-                toAddresses.Each((str, n) =>
-                {
-                    addresses.Add(new MailAddress(str.Trim(), toNames[n].Trim()));
-                });
+                toAddresses.Each((str, n) => { addresses.Add(new MailAddress(str.Trim(), toNames[n].Trim())); });
                 // return the List of MailAddress
                 return addresses;
             }
+
             return addresses;
         }
     }

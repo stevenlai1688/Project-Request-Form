@@ -18,6 +18,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,9 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\js\dashboard.js" />
     <None Include="wwwroot\js\site.js" />
-    <None Include="wwwroot\js\tablesorter-handler.js" />
     <None Include="wwwroot\lib\bootstrap-material-design\js\bootstrap-material-design.js" />
     <None Include="wwwroot\lib\bootstrap-material-design\js\bootstrap-material-design.js.map" />
     <None Include="wwwroot\lib\bootstrap-material-design\js\bootstrap-material-design.min.js" />
@@ -118,6 +122,12 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Template\MessageBody.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

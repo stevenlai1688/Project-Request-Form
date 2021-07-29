@@ -1,18 +1,11 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System;
 
 #nullable disable
 
-namespace Project.Models
+namespace Project.Request.Models.DataModels
 {
-    public partial class ProjectRequest
+    public class ProjectRequest
     {
-
         public int Id { get; set; }
 
         public string RequestReason { get; set; }
@@ -29,11 +22,8 @@ namespace Project.Models
 
         public string RequestEffectsOnOrganization { get; set; }
 
-        public string EstimateTimeFrame { get; set; }
         public string BusinessJustification { get; set; }
         public string Departments { get; set; }
         public string ProjectName { get; set; }
-
     }
 }
-

@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Project Request</title>
 
-    <link href="~/lib/bootstrap-theme-bootswatch-paper/css/paper.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-theme-bootswatch-paper/css/paper.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 
-    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet"/>
 
-    <link href="~/lib/richText/richtext.min.css" rel="stylesheet" />
+    <link href="~/lib/richText/richtext.min.css" rel="stylesheet"/>
 
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Montserrat">
@@ -21,46 +21,44 @@
 
 </head>
 <body style="font-family: 'Montserrat', sans-serif">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-nav">
-            <div class="navbar-header">
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">
-                    <img src="~/img/AxiaLogo.png" alt="Axia Logo" />
-                </a>
-            </div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-nav">
+        <div class="navbar-header">
+            <a asp-controller="Home" asp-action="Index" class="navbar-brand">
+                <img src="~/img/AxiaLogo.png" alt="Axia Logo"/>
+            </a>
         </div>
-    </nav>
-
-    <div class="container body-content">
-
-        @RenderBody()
-
-        <footer class="border-top modal-footer text-muted">
-            <div class="container">
-                &copy; @DateTime.Now.Year - ProjectRequest - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
     </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/richText/jquery.richtext.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", false)
+</nav>
 
-    <noscript>
-        <style>
-            body {
-                opacity: 1;
-            }
-        </style>
-    </noscript>
+<div class="container body-content">
 
-    <script type="text/javascript">
-        function showContent() {
-            document.body.classList.add("all-loaded");
-        }
+    @RenderBody()
 
-        window.onload = showContent;
-    </script>
+    <footer class="border-top modal-footer text-muted">
+        <div class="container">
+            &copy; @DateTime.Now.Year - ProjectRequest - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/richText/jquery.richtext.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@RenderSection("Scripts", false)
+
+<noscript>
+    <style>
+        body { opacity: 1; }
+    </style>
+</noscript>
+
+<script type="text/javascript">
+    function showContent() {
+        document.body.classList.add("all-loaded");
+    }
+
+    window.onload = showContent;
+</script>
 </body>
 </html>

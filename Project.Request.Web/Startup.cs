@@ -1,23 +1,23 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Project.Data;
-using Project.Request.Services.Services;
-using Project.Request.Services.Interfaces;
-using Project.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Project.Request.Data;
 using Project.Request.Data.Factory;
-using Project.Request.Web.Models;
+using Project.Request.Models;
 using Project.Request.Models.Settings;
+using Project.Request.Services.Helpers;
+using Project.Request.Services.Interfaces;
+using Project.Request.Services.Services;
+using Serilog;
 
-namespace Project
+namespace Project.Request.Web
 {
     public class Startup
     {
@@ -25,6 +25,7 @@ namespace Project
         {
             Configuration = configuration;
         }
+
         // Reading .Net OAuth Authentication
         // -> 3rd party authentication 
         // authentication -> we know who you are
@@ -34,20 +35,20 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<SmtpSettings>(Configuration.GetSection("Smtp"));
             services.Configure<MailAddressSettings>(Configuration.GetSection("MailAddressSettings"));
 
             services.AddDbContext<StevenDemoWebsiteContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("OperationalConnection")), ServiceLifetime.Transient);
+                    options.UseSqlServer(Configuration.GetConnectionString("OperationalConnection")),
+                ServiceLifetime.Transient);
 
-            // on start up, everytime we request service, it will addtransient
+            // on start up, everytime we request service, it will addtransient, help with dependency inject
             services.AddTransient<IProjectRequestService, ProjectRequestService>();
             services.AddTransient<ICostCenterService, CostCenterService>();
             services.AddTransient<IDbContextFactory, DbContextFactory>();
             services.AddTransient<IEmailService, EmailService>();
-
+            services.AddTransient<HtmlTemplate, HtmlTemplate>();
             // add Azure AD to services
             services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
                 .AddAzureAD(options => Configuration.Bind("AzureAd", options));
@@ -62,6 +63,9 @@ namespace Project
 
             services.AddRazorPages();
             services.AddAutoMapper(typeof(Startup));
+            
+            services.AddLogging(config => config.AddSerilog());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +81,7 @@ namespace Project
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -84,12 +89,12 @@ namespace Project
             // authenticaiton
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
