@@ -13,7 +13,7 @@ Additionally, I created an Email Service that sends email using Smtp and MailAdd
 
 Lastly, I imported Serilog NuGet Package and added the configuration inside the Startup.cs file in order to keep track of a rolling log file, separated by Days, that tracks informations regarding different app services and its response time for better debugging and tracking requests.
 
-Welcome Page:
+<h4>Welcome Page:</h4>
 <img width="960" alt="Welcome" src="https://user-images.githubusercontent.com/70926365/127692783-4185c197-2a8c-463d-8d4d-65b20f9bbd34.png">
 
 Signin Page using Azure AD service and Oauth2.0:
