@@ -11,5 +11,33 @@ Furthermore, I incorporated Azure AD service By modifying appsetting.json and St
 
 Additionally, I created an Email Service that sends email using Smtp and MailAddress configuration in the appsetting to direct user-created project request entry to our email folders.
 
-This project written is primarily in C# and C#html (Razor).
+Lastly, I imported Serilog NuGet Package and added the configuration inside the Startup.cs file in order to keep track of a rolling log file, separated by Days, that tracks informations regarding different app services and its response time.
+
+Welcome Page:
+<img width="960" alt="Welcome" src="https://user-images.githubusercontent.com/70926365/127692783-4185c197-2a8c-463d-8d4d-65b20f9bbd34.png">
+
+Signin Page using Azure AD service and Oauth2.0:
+<img width="961" alt="Signin" src="https://user-images.githubusercontent.com/70926365/127692874-2d8d4ed9-1a67-481e-9726-ee1e5db78614.png">
+
+Index Page:
+<img width="960" alt="Index" src="https://user-images.githubusercontent.com/70926365/127692954-12795c35-d136-4a63-b8be-90eec57d0ac0.png">
+
+Index Page with Pagination (Separated by 10 Entries):
+<img width="959" alt="IndexAlt" src="https://user-images.githubusercontent.com/70926365/127692991-75c380bc-bddb-4db1-a022-0862189a750f.png">
+
+
+Creation Page:
+<img width="959" alt="Create" src="https://user-images.githubusercontent.com/70926365/127692929-c3a710d3-1ae4-404e-85af-27fb31d3112b.png">
+
+Creation Page with populated fields:
+<img width="960" alt="CreateAlt" src="https://user-images.githubusercontent.com/70926365/127693010-83d9a005-c033-4294-9716-36628b3a03a8.png">
+
+Edit Page:
+<img width="959" alt="Edit" src="https://user-images.githubusercontent.com/70926365/127693030-31d7fadd-496a-42ed-b07e-61521e922444.png">
+
+Details Page:
+<img width="960" alt="Details" src="https://user-images.githubusercontent.com/70926365/127693042-e4ac5fb9-c35c-40ae-ae2f-57a1b7e9dfcc.png">
+
+Delete Page:
+<img width="959" alt="Delete" src="https://user-images.githubusercontent.com/70926365/127693059-e64bc7dd-aa3b-487d-9167-ab84a9c232fc.png">
 
