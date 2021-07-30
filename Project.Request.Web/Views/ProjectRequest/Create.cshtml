@@ -43,22 +43,25 @@
             <div class="form-group">
                 <label asp-for="RequestChanges" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="List out some changes for the proposed project"></label>
-                <span asp-validation-for="RequestChanges" class="text-danger"></span>
                 <textarea asp-for="RequestChanges" class="form-control"> </textarea>
+               
+                <span asp-validation-for="RequestChanges" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Detail reason for requesting this change"></label>
-                <span asp-validation-for="RequestReason" class="text-danger"></span>
                 <textarea asp-for="RequestReason" class="form-control"> </textarea>
+                
+                <span asp-validation-for="RequestReason" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
                 <label asp-for="RequestDescription" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Add more details"></label>
-                <span asp-validation-for="RequestDescription" class="text-danger"></span>
+
                 <textarea asp-for="RequestDescription" class="form-control"> </textarea>
+                <span asp-validation-for="RequestDescription" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
@@ -99,17 +102,17 @@
                     &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the reasoning for initiating this project"></label>
                     <div class="container" style="padding-left: 0px">
 
-                        <div class="row" onsubmit="return validation()">
-                            <div class="col-md-3" style="padding-right: 0px">
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Compliance" name="BusinessJustification[]" onclick="clickedValidation()" />Compliance &nbsp;</label>
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Efficiencies" name="BusinessJustification[]" onclick="clickedValidation()" />Increased Efficiencies &nbsp;</label>
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Cost Savings" name="BusinessJustification[]" onclick="clickedValidation()" />Cost Savings &nbsp;</label>
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Revenue" name="BusinessJustification[]" onclick="clickedValidation()" />Increased Revenue&nbsp;</label>
+                        <div class="row" onsubmit="return validationBusiness()">
+                            <div class="col-md-3" style="">
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Compliance" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Compliance &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Efficiencies" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Increased Efficiencies &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Cost Savings" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Cost Savings &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Increased Revenue" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Increased Revenue&nbsp;</label>
                             </div>
                             <div class="col-md-2">
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Regulatory" name="BusinessJustification[]" onclick="clickedValidation()" />Regulatory &nbsp;</label>
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Retention" name="BusinessJustification[]" onclick="clickedValidation()" />Retention &nbsp;</label>
-                                <label><input asp-for="CheckedItems" type="checkbox" value="Upgrade" name="BusinessJustification[]" onclick="clickedValidation()" /> Upgrade &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Regulatory" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Regulatory &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Retention" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />Retention &nbsp;</label>
+                                <label><input asp-for="CheckedItems" type="checkbox" value="Upgrade" name="BusinessJustification[]" onclick="clickedValidationBusiness()" /> Upgrade &nbsp;</label>
 
                             </div>
                         </div>
@@ -118,27 +121,29 @@
                     </div>
 
                 </div>
+                <div class="col-md-4" style="padding-left: 0px">
+                    <label asp-for="DepartmentsId" class="control-label">Department</label>
+                    &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the departments affect by this project"></label>
+                    <br>
+                    <div style="padding-left: initial; padding-right: initial; overflow-y:scroll; height:120px" onsubmit="return validationDepartments()">
 
-                <label asp-for="DepartmentsId" class="control-label">Department</label>
-                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the departments affect by this project"></label>
-                <br>
-                <div class="col-md-4" style="padding-left: initial; padding-right: initial; overflow-y:scroll; height:150px" onsubmit="return validationDepartments()">
+                        @foreach (var items in ViewBag.CostCenters)
+                        {
+                            <label>
+                                <input type="checkbox" value="@items.Value" name="DepartmentsId[]" onclick="clickedValidationDepartment()" /> @items.Value &nbsp;
+                            </label>
+                            <br />
+                        }
+                        @*<input asp-for="DepartmentsId" type="checkbox" class="form-control" style="min-height: 120px; width: 100%;" asp-items="ViewBag.CostCenters" required>*@
 
-                    @foreach (var items in ViewBag.CostCenters)
-                    {
-                        <label>
-                            <input type="checkbox" value="@items.Value" name="DepartmentsId[]" onclick="clickedValidationDepartment()" /> @items.Value &nbsp;
-                        </label>
-                        <br />
-                    }
-                    @*<input asp-for="DepartmentsId" type="checkbox" class="form-control" style="min-height: 120px; width: 100%;" asp-items="ViewBag.CostCenters" required>*@
+                    </div>
                     <span asp-validation-for="DepartmentsId" class="text-danger" id="validationMessageDepartment"></span>
-                    <br />
                 </div>
+                
             </div>
             <div style="padding-top:100px">
                 <a asp-action="Index" class="btn btn-outline-secondary" style="font-size: smaller">Back to List</a>
-                <input type="submit" value="Create" class="btn btn-primary" style="font-size: smaller" onclick="validation(); validationDepartments();" />
+                <input type="submit" value="Create" class="btn btn-primary" style="font-size: smaller" onclick="validationBusiness(); validationDepartments()" />
             </div>
         </form>
     </div>

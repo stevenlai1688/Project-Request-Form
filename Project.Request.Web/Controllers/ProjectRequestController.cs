@@ -224,7 +224,7 @@ namespace Project.Request.Web.Controllers
             }
 
             // if ModelState is not valid, then repopulate the description of CostCenter and return the ViewModel back to the same View again.
-            await PopulateLookups();
+            await PopulateLookups(projectRequestViewModel);
             return View(projectRequestViewModel);
         }
 

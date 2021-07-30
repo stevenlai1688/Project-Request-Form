@@ -1,5 +1,5 @@
 ﻿// checks BusinessJustification checkbox checked
-function validation() {
+function validationBusiness() {
     var checkBoxes = document.getElementsByName("BusinessJustification[]");
 
     var isChecked = 0;
@@ -40,7 +40,7 @@ function validationDepartments() {
 }
 
 // change validation message to empty if the box is clicked
-function clickedValidation() {
+function clickedValidationBusiness() {
     document.getElementById("validationMessage").innerHTML = "";
 
 }
