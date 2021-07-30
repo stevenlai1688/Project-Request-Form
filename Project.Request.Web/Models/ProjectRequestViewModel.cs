@@ -14,25 +14,24 @@ namespace Project.Request.Web.Models
     {
         public int Id { get; set; }
 
-        [DisplayName("Reason for Changes")] [Required] public string RequestReason { get; set; }
+        [DisplayName("Reason for Changes")] public string RequestReason { get; set; }
 
         [Required]
-        [DisplayName("Project Owner Name")]
+        [DisplayName("Name")]
         [StringLength(50)]
         public string RequestorName { get; set; }
 
-        [DisplayName("Requested Completion Date")]
+        [DisplayName("Completion Date")]
         [DataType(DataType.Date)]
         public DateTime DesiredCompletionDate { get; set; }
 
         [DisplayName("Priority")] [Required] public string PriorityLevel { get; set; }
 
         [DisplayName("Description of Changes")]
-        [Required]
         public string RequestDescription { get; set; }
 
-        [DisplayName("Changes Requested")] [Required]
-        public string RequestChanges { get; set; }
+        [DisplayName("Changes Requested")] public string RequestChanges { get; set; }
+
         [DisplayName("Effect on Organization")]
         public string RequestEffectsOnOrganization { get; set; }
 

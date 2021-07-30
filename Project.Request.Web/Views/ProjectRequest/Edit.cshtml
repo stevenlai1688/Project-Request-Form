@@ -38,22 +38,20 @@
             <div class="form-group">
                 <label asp-for="RequestChanges" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="List out some changes for the proposed project"></label>
-                <textarea asp-for="RequestChanges" class="form-control"> </textarea>
                 <span asp-validation-for="RequestChanges" class="text-danger"></span>
+                <textarea asp-for="RequestChanges" class="form-control"> </textarea>
             </div>
             <div class="form-group">
                 <label asp-for="RequestReason" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Detail reason for requesting this change"></label>
-
-                <textarea asp-for="RequestReason" class="form-control"> </textarea>
                 <span asp-validation-for="RequestReason" class="text-danger"></span>
+                <textarea asp-for="RequestReason" class="form-control"> </textarea>
             </div>
             <div class="form-group">
                 <label asp-for="RequestDescription" class="control-label"></label>
                 &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Add more details"></label>
-
-                <textarea asp-for="RequestDescription" class="form-control"> </textarea>
                 <span asp-validation-for="RequestDescription" class="text-danger"></span>
+                <textarea asp-for="RequestDescription" class="form-control"> </textarea>
             </div>
 
             <div class="form-group">
@@ -79,10 +77,10 @@
                     &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the priority level of this project"></label>
                     @foreach (var priority in priorityLevel)
                     {
-                    <br />
-                    <label>
-                        <input asp-for="PriorityLevel" type="radio" value="@priority" class="form-check" />@priority
-                    </label>
+                        <br />
+                        <label>
+                            <input asp-for="PriorityLevel" type="radio" value="@priority" class="form-check" />@priority
+                        </label>
                     }
 
                 </div>
@@ -98,12 +96,8 @@
                             <div class="col-md-3" style="padding-right: 0px">
                                 @foreach (var justification in justifications)
                                 {
-                                    if (Model.BusinessJustification != null){
-                                        var check = Model.BusinessJustification.Contains(justification);
-                                <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidationBusiness()" checked="@check" />@justification &nbsp;</label>
-                                    } else {
-                                <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />@justification &nbsp;</label>
-                                    }
+                                    var check = Model.BusinessJustification.Contains(justification);
+                                    <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidation()" checked="@check" />@justification &nbsp;</label>
                                 }
                             </div>
                             @{
@@ -115,12 +109,8 @@
                             <div class="col-md-2">
                                 @foreach (var justification in justifications)
                                 {
-                                  if (Model.BusinessJustification != null){
-                                        var check = Model.BusinessJustification.Contains(justification);
-                                <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidationBusiness()" checked="@check" />@justification &nbsp;</label>
-                                    } else {
-                                <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidationBusiness()" />@justification &nbsp;</label>
-                                    }
+                                    var check = Model.BusinessJustification.Contains(justification);
+                                    <label><input asp-for="CheckedItems" type="checkbox" value="@justification" name="BusinessJustification[]" onclick="clickedValidation()" checked="@check" />@justification &nbsp;</label>
                                 }
                             </div>
                         </div>
@@ -136,40 +126,30 @@
                     </select><span asp-validation-for="DepartmentsId" class="text-danger"></span>
                     <br/>
                 </div>-->
-                <div class="col-md-4" style="padding-left: 0px">
-                    <label asp-for="DepartmentsId" class="control-label">Department</label>
-                    &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the departments affect by this project"></label>
-                    <br>
-                    <div style="padding-left: initial; padding-right: initial; overflow-y:scroll; height:120px" onsubmit="return validationDepartments()">
+                <label asp-for="DepartmentsId" class="control-label">Department</label>
+                &nbsp;<label class="fa fa-question-circle-o control-label" data-toggle="tooltip" data-placement="right" title="Select the departments affect by this project"></label>
+                <br>
+                <div class="col-md-4" style="padding-left: initial; padding-right: initial; overflow-y:scroll; height:150px" onsubmit="return validationDepartments()">
 
 
-                        @* The first statement check whether the department has a checkbox selected already during creation, if it does, then individually populate the checked option *@
-                        @foreach (var items in ViewBag.CostCenters)
-                        {
-                          if (Model.Departments != null){
-                            var check = Model.Departments.Contains(items.Value);
+
+                    @foreach (var items in ViewBag.CostCenters)
+                    {
+                        var check = Model.Departments.Contains(items.Value);
                         <label>
                             <input type="checkbox" value="@items.Value" name="DepartmentsId[]" onclick="clickedValidationDepartment()" checked="@check" /> @items.Value &nbsp;
 
                         </label>
                         <br />
-                        @* Otherwise, it populates empty checkbox*@
-                            } else {
-                        <label>
-                            <input type="checkbox" value="@items.Value" name="DepartmentsId[]" onclick="clickedValidationDepartment()" /> @items.Value &nbsp;
-
-                        </label>
-                        <br />
-                            }
-                        }
-
-                    </div>
+                    }
                     <span asp-validation-for="DepartmentsId" class="text-danger" id="validationMessageDepartment"></span>
+                    <br />
                 </div>
+
             </div>
             <div style="padding-top:100px">
                 <a asp-action="Index" class="btn btn-outline-secondary" style="font-size: smaller">Back to List</a>
-                <input type="submit" value="Save" class="btn btn-primary" style="font-size: smaller" onclick=" validationBusiness();" />
+                <input type="submit" value="Save" class="btn btn-primary" style="font-size: smaller" onclick="return validation()" />
             </div>
         </form>
     </div>
